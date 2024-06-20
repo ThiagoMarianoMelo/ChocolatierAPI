@@ -16,11 +16,11 @@ namespace Chocolatier.API.Configurations
 
         public static void SyncMigrations(this WebApplication application)
         {
-            //using var scope = application.Services.CreateScope();
-            
-            //var context = scope.ServiceProvider.GetRequiredService<ChocolatierContext>();
+            using var scope = application.Services.CreateScope();
 
-            //context.Database.Migrate();
+            var context = scope.ServiceProvider.GetRequiredService<ChocolatierContext>();
+
+            context.Database.Migrate();
         }
     }
 }
