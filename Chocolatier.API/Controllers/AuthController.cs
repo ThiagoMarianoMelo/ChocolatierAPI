@@ -1,5 +1,4 @@
-﻿using Chocolatier.API.Authorization;
-using Chocolatier.Domain.Command.Establishment;
+﻿using Chocolatier.Domain.Command.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,18 +6,17 @@ namespace Chocolatier.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EstablishmentController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IMediator Mediator;
 
-        public EstablishmentController(IMediator mediator)
+        public AuthController(IMediator mediator)
         {
             Mediator = mediator;
         }
 
         [HttpPost]
-        [HeadquarterAuthorization]
-        public async Task<IActionResult> Create(CreateEstablishmentCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login(LoginCommand request, CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(request, cancellationToken);
 

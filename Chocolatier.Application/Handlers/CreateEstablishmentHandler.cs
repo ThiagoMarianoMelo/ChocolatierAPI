@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Chocolatier.Domain.Command;
+using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Responses;
 using MediatR;
@@ -24,9 +24,14 @@ namespace Chocolatier.Application.Handlers
             if (!request.IsValid)
                 return new Response(false, request.Notifications);
 
+            var establishmentByEmail = await UserManager.FindByEmailAsync(request.Email);
+
+            if (establishmentByEmail != null)
+                return new Response(false, new List<string> { "Email já cadastrado." });
+
             var establishment = Mapper.Map<Establishment>(request);
 
-            var resultCreateEstablishment = await UserManager.CreateAsync(establishment);
+            var resultCreateEstablishment = await UserManager.CreateAsync(establishment, request.Password);
 
             if (!resultCreateEstablishment.Succeeded)
                 return new Response(false, resultCreateEstablishment.Errors.Select(e => e.Description).ToList());

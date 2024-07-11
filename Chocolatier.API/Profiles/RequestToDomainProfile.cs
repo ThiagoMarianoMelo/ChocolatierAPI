@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Chocolatier.Domain.Command;
+using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Entities;
 
 namespace Chocolatier.API.Profiles

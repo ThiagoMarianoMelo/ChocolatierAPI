@@ -10,6 +10,12 @@ namespace Chocolatier.Domain.Responses
             Sucess = sucess;
         }
 
+        public Response(bool sucess, object data)
+        {
+            Sucess = sucess;
+            Data = data;
+        }
+
         public Response(bool sucess, List<string> messages)
         {
             Sucess = sucess;

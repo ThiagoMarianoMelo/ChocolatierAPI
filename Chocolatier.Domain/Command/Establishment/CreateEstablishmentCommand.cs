@@ -2,7 +2,7 @@
 using Flunt.Notifications;
 using Flunt.Validations;
 
-namespace Chocolatier.Domain.Command
+namespace Chocolatier.Domain.Command.Establishment
 {
     public class CreateEstablishmentCommand : BaseComamnd
     {
