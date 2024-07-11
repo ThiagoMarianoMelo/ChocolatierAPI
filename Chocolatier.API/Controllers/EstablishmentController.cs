@@ -22,9 +22,9 @@ namespace Chocolatier.API.Controllers
             var result = await Mediator.Send(request, cancellationToken);
 
             if (!result.Sucess)
-                return BadRequest(result.Messages);
+                return BadRequest(result);
 
-            return Created();
+            return Ok(result);
         }
     }
 }

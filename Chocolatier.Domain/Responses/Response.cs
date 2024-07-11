@@ -30,7 +30,7 @@ namespace Chocolatier.Domain.Responses
         }
 
         public bool Sucess {  get; set; }
-        public List<string> Messages { get; set; }
+        public List<string> Messages { get; set; } = [];
         public object? Data { get; set; }
 
 

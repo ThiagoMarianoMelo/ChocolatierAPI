@@ -21,7 +21,6 @@ namespace Chocolatier.Domain.Command
                 .IsNotNullOrWhiteSpace(Email, "Email", "O e-mail do estabelecimento é obrigatório.")
                 .IsNotNullOrWhiteSpace(Password, "Password", "A senha de acessso do estabelecimento é obrigatório.")
                 .IsNotNullOrWhiteSpace(Address, "Adress", "O endereço do estabelecimento é obrigatório."));
-                //.IsFalse(EstablishmentType == 0, "EstablishmentType", "Não é possível cadastrar um Admin, entre em contato com o suporte")
         }
     }
 }
