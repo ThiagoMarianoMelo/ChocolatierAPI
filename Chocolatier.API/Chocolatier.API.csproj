@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Chocolatier.Application\Chocolatier.Application.csproj" />
     <ProjectReference Include="..\Chocolatier.Data\Chocolatier.Data.csproj" />
   </ItemGroup>
 
