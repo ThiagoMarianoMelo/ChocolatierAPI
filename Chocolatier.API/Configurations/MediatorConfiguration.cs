@@ -11,6 +11,7 @@ namespace Chocolatier.API.Configurations
         public static void ConfigureMediator(this IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CreateEstablishmentCommand, Response>, CreateEstablishmentHandler>();
+            services.AddScoped<IRequestHandler<UpdateEstablishmentCommand, Response>, UpdateEstablishmentHandler>();
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 
             services.AddScoped<IMediator, Mediator>();

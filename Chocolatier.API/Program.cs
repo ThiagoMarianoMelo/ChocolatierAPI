@@ -1,6 +1,5 @@
 using Chocolatier.API.Configurations;
 using Chocolatier.API.Profiles;
-using Chocolatier.Domain.ConfigObjects;
 using Microsoft.OpenApi.Models;
 
 internal class Program
@@ -21,7 +20,6 @@ internal class Program
 
         builder.Services.AddAutoMapper([typeof(RequestToDomainProfile), typeof(DomainToResponseProfile)]);
         builder.Services.AddIdentityConfiguration(builder.Configuration);
-
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();

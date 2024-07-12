@@ -32,6 +32,18 @@ namespace Chocolatier.API.Controllers
             return Ok(result);
         }
 
+        [HttpPatch]
+        [HeadquarterAuthorization]
+        public async Task<IActionResult> Patch(UpdateEstablishmentCommand request, CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(request, cancellationToken);
+
+            if (!result.Sucess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpGet]   
         [HeadquarterAuthorization]
         [Route("List")]
