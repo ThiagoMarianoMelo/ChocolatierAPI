@@ -1,8 +1,10 @@
-﻿using Chocolatier.Domain.Entities;
+﻿using AutoMapper;
+using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.RequestFilter;
 using Chocolatier.Domain.Responses;
+using Chocolatier.Domain.Responses.DataResponses;
 using Chocolatier.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +13,12 @@ namespace Chocolatier.Application.Queries
     public class EstablishmentQueries : IEstablishmentQueries
     {
         private readonly IEstablishmentRepository EstablishmentRepository;
+        private readonly IMapper Mapper;
 
-        public EstablishmentQueries(IEstablishmentRepository establishmentRepository)
+        public EstablishmentQueries(IEstablishmentRepository establishmentRepository, IMapper mapper)
         {
             EstablishmentRepository = establishmentRepository;
+            Mapper = mapper;
         }
 
         public async Task<Response> GetEstablishmentsPaginations(GetEstablishmentsPaginationsRequest request, CancellationToken cancellationToken)
@@ -26,17 +30,15 @@ namespace Chocolatier.Application.Queries
 
                 var queryableData = EstablishmentRepository.GetQueryableEstablishmentsByFilter(request.Name, request.Email);
 
-                //CONSULTAR APENAS DADOS NECESSÁRIOS (SELECT)
-
                 var total = queryableData.Count();
 
                 PageData(ref queryableData, request.CurrentPage, request.PageSize);
 
                 var resultData = await queryableData.ToListAsync(cancellationToken);
 
-                var result = new Pagination<Establishment>(resultData, total, request.CurrentPage, request.PageSize);
+                var responseData = Mapper.Map<List<EstablishmentListDataResponse>>(resultData);
 
-                //TRANSFORMAR EM RESPONSE PARA ENVIAR APENAS DADOS NECESSÁRIOS
+                var result = new Pagination<EstablishmentListDataResponse>(responseData, total, request.CurrentPage, request.PageSize);
 
                 return new Response(true, result);
             }
