@@ -8,6 +8,7 @@ namespace Chocolatier.API.Configurations
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
+            services.AddScoped<IIngredientTypeRepository, IngredientTypeRepository>();
         }
     }
 }

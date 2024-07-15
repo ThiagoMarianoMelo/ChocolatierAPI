@@ -1,6 +1,7 @@
 ﻿using Chocolatier.Application.Handlers;
 using Chocolatier.Domain.Command.Auth;
 using Chocolatier.Domain.Command.Establishment;
+using Chocolatier.Domain.Command.IngredientType;
 using Chocolatier.Domain.Responses;
 using MediatR;
 
@@ -12,6 +13,7 @@ namespace Chocolatier.API.Configurations
         {
             services.AddScoped<IRequestHandler<CreateEstablishmentCommand, Response>, CreateEstablishmentHandler>();
             services.AddScoped<IRequestHandler<UpdateEstablishmentCommand, Response>, UpdateEstablishmentHandler>();
+            services.AddScoped<IRequestHandler<CreateIngredientTypeCommand, Response>, CreateIngredientTypeHandler>();
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 
             services.AddScoped<IMediator, Mediator>();

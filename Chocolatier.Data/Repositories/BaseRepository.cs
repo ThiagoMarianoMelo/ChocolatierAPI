@@ -1,9 +1,10 @@
 ﻿using Chocolatier.Data.Context;
+using Chocolatier.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chocolatier.Data.Repositories
 {
-    public abstract class BaseRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly ChocolatierContext ChocolatierContext;
         private readonly DbSet<TEntity> DbSet;
@@ -14,9 +15,14 @@ namespace Chocolatier.Data.Repositories
             DbSet = ChocolatierContext.Set<TEntity>();
         }
 
-        protected async Task<TEntity> Create(TEntity entity, CancellationToken cancellationToken) 
+        public async Task<TEntity> Create(TEntity entity, CancellationToken cancellationToken) 
         {
             return (await DbSet.AddAsync(entity, cancellationToken)).Entity;
+        }
+
+        public async Task<int> SaveChanges(CancellationToken cancellationToken)
+        {
+            return await ChocolatierContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

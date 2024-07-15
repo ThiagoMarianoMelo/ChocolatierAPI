@@ -44,7 +44,7 @@ namespace Chocolatier.Application.Handlers
 
                 var resultChangePassword = await UserManager.ResetPasswordAsync(establishment, tokenChangePassword, request.Password);
 
-                if(!resultChangePassword.Succeeded)
+                if (!resultChangePassword.Succeeded)
                     return resultChangePassword;
             }
 
