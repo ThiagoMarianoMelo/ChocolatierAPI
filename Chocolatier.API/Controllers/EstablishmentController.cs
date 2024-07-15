@@ -9,14 +9,13 @@ namespace Chocolatier.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EstablishmentController : ControllerBase
+    public class EstablishmentController : BaseController
     {
-        private readonly IMediator Mediator;
         private readonly IEstablishmentQueries EstablishmentQueries;
 
         public EstablishmentController(IMediator mediator, IEstablishmentQueries establishmentQueries)
+            :base(mediator)
         {
-            Mediator = mediator;
             EstablishmentQueries = establishmentQueries;
         }
 
@@ -24,37 +23,29 @@ namespace Chocolatier.API.Controllers
         [HeadquarterAuthorization]
         public async Task<IActionResult> Create(CreateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var result = await Mediator.Send(request, cancellationToken);
-
-            if (!result.Sucess)
-                return BadRequest(result);
-
-            return Ok(result);
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
         [HttpPatch]
         [HeadquarterAuthorization]
         public async Task<IActionResult> Patch(UpdateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var result = await Mediator.Send(request, cancellationToken);
-
-            if (!result.Sucess)
-                return BadRequest(result);
-
-            return Ok(result);
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
         [HttpGet]   
         [HeadquarterAuthorization]
         [Route("List")]
-        public async Task<IActionResult> GetPagination([FromQuery] GetEstablishmentsPaginationsRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetList([FromQuery] GetEstablishmentsPaginationsRequest request, CancellationToken cancellationToken)
         {
-            var result = await EstablishmentQueries.GetEstablishmentsPaginations(request, cancellationToken);
+            return GetActionResult(await EstablishmentQueries.GetEstablishmentsPaginations(request, cancellationToken));
+        }
 
-            if (!result.Sucess)
-                return BadRequest(result);
-
-            return Ok(result);
+        [HttpDelete]
+        [HeadquarterAuthorization]
+        public async Task<IActionResult> Delete([FromQuery] DeleteEstablishmentCommand request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
 }

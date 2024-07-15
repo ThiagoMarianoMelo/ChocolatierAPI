@@ -4,6 +4,7 @@ using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 namespace Chocolatier.Application.Handlers
 {
@@ -27,21 +28,21 @@ namespace Chocolatier.Application.Handlers
             var establishmentByEmail = await UserManager.FindByEmailAsync(request.Email);
 
             if (establishmentByEmail != null)
-                return new Response(false, new List<string> { "Email já cadastrado." });
+                return new Response(false, ["Email já cadastrado."], HttpStatusCode.BadRequest);
 
             var establishment = Mapper.Map<Establishment>(request);
 
             var resultCreateEstablishment = await UserManager.CreateAsync(establishment, request.Password);
 
             if (!resultCreateEstablishment.Succeeded)
-                return new Response(false, resultCreateEstablishment.Errors.Select(e => e.Description).ToList());
+                return new Response(false, resultCreateEstablishment.Errors.Select(e => e.Description).ToList(), HttpStatusCode.BadRequest);
 
             var resultAddRole = await UserManager.AddToRoleAsync(establishment, establishment.EstablishmentType.ToString());
 
             if (!resultAddRole.Succeeded)
-                return new Response(false, resultAddRole.Errors.Select(e => e.Description).ToList());
+                return new Response(false, resultAddRole.Errors.Select(e => e.Description).ToList(), HttpStatusCode.InternalServerError);
 
-            return new Response(true);
+            return new Response(true, HttpStatusCode.Created);
         }
 
     }

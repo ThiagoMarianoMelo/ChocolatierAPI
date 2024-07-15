@@ -6,24 +6,18 @@ namespace Chocolatier.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
-        private readonly IMediator Mediator;
 
         public AuthController(IMediator mediator)
+            :base(mediator)
         {
-            Mediator = mediator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommand request, CancellationToken cancellationToken)
         {
-            var result = await Mediator.Send(request, cancellationToken);
-
-            if (!result.Sucess)
-                return BadRequest(result);
-
-            return Ok(result);
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
 }

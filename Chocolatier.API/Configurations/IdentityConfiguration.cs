@@ -21,6 +21,7 @@ namespace Chocolatier.API.Configurations
             services.Configure<IdentityOptions>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                options.Lockout.AllowedForNewUsers = false;
             }
             );
 

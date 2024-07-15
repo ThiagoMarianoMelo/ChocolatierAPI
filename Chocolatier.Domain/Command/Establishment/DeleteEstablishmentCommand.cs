@@ -1,0 +1,20 @@
+﻿using Chocolatier.Domain.Responses;
+using Flunt.Notifications;
+using Flunt.Validations;
+using MediatR;
+
+namespace Chocolatier.Domain.Command.Establishment
+{
+    public class DeleteEstablishmentCommand : BaseComamnd
+    {
+        public string Id { get; set; } = string.Empty;
+
+        public void Validate()
+        {
+            AddNotifications(
+                new Contract<Notification>()
+                .Requires()
+                .IsNotNullOrWhiteSpace(Id, "Id", "Problema interno para identificação do estabelecimento, tente novamente."));
+        }
+    }
+}

@@ -4,6 +4,7 @@ using Chocolatier.Domain.Interfaces.Services;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 namespace Chocolatier.Application.Handlers
 {
@@ -27,16 +28,19 @@ namespace Chocolatier.Application.Handlers
             var establishment = await UserManager.FindByEmailAsync(request.Email ?? "");
 
             if (establishment == null)
-                return new Response(false, new List<string> { "Login Inválido" });
+                return new Response(false, ["Login Inválido"], HttpStatusCode.BadRequest);
 
             var resultCheckPassword = await UserManager.CheckPasswordAsync(establishment, request.Password ?? "");
 
             if (!resultCheckPassword)
-                return new Response(false, new List<string> { "Login Inválido" });
+                return new Response(false, ["Login Inválido"], HttpStatusCode.BadRequest);
+
+            if (establishment.LockoutEnabled)
+                return new Response(false, ["Conta do estabelecimento desativada, entre em contato com o administrador."], HttpStatusCode.BadRequest);
 
             var token = await TokenService.GenerateTokenByEstablishment(establishment);
 
-            return new Response(true, token);
+            return new Response(true, token, HttpStatusCode.OK);
         }
     }
 }
