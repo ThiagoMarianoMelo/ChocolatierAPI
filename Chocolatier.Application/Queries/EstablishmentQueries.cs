@@ -5,18 +5,16 @@ using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.RequestFilter;
 using Chocolatier.Domain.Responses;
 using Chocolatier.Domain.Responses.DataResponses;
-using Chocolatier.Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace Chocolatier.Application.Queries
 {
-    public class EstablishmentQueries : IEstablishmentQueries
+    public class EstablishmentQueries : BaseQueries<Establishment, EstablishmentListDataResponse>, IEstablishmentQueries
     {
         private readonly IEstablishmentRepository EstablishmentRepository;
         private readonly IMapper Mapper;
 
-        public EstablishmentQueries(IEstablishmentRepository establishmentRepository, IMapper mapper)
+        public EstablishmentQueries(IEstablishmentRepository establishmentRepository, IMapper mapper):base(mapper)
         {
             EstablishmentRepository = establishmentRepository;
             Mapper = mapper;
@@ -31,15 +29,7 @@ namespace Chocolatier.Application.Queries
 
                 var queryableData = EstablishmentRepository.GetQueryableEstablishmentsByFilter(request.Name, request.Email);
 
-                var total = queryableData.Count();
-
-                PageData(ref queryableData, request.CurrentPage, request.PageSize);
-
-                var resultData = await queryableData.ToListAsync(cancellationToken);
-
-                var responseData = Mapper.Map<List<EstablishmentListDataResponse>>(resultData);
-
-                var result = new Pagination<EstablishmentListDataResponse>(responseData, total, request.CurrentPage, request.PageSize);
+                var result = await BaseGetPaginantionDataByQueryable(queryableData, request, cancellationToken);
 
                 return new Response(true, result, HttpStatusCode.OK);
             }
@@ -48,11 +38,6 @@ namespace Chocolatier.Application.Queries
                 return new Response(false, "Erro interno no processamento, entre em contato com o suporte.", HttpStatusCode.InternalServerError);
             }
 
-        }
-
-        private void PageData(ref IQueryable<Establishment> queryableData, int pageIndex, int pageSize)
-        {
-             queryableData = queryableData.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
     }
 }
