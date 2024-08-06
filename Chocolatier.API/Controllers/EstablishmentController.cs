@@ -14,7 +14,7 @@ namespace Chocolatier.API.Controllers
         private readonly IEstablishmentQueries EstablishmentQueries;
 
         public EstablishmentController(IMediator mediator, IEstablishmentQueries establishmentQueries)
-            :base(mediator)
+            : base(mediator)
         {
             EstablishmentQueries = establishmentQueries;
         }
@@ -28,12 +28,13 @@ namespace Chocolatier.API.Controllers
 
         [HttpPatch]
         [HeadquarterAuthorization]
-        public async Task<IActionResult> Patch(UpdateEstablishmentCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Patch([FromQuery] string EstablishmentId, UpdateEstablishmentCommand request, CancellationToken cancellationToken)
         {
+            request.Id = EstablishmentId;
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
-        [HttpGet]   
+        [HttpGet]
         [HeadquarterAuthorization]
         [Route("List")]
         public async Task<IActionResult> GetList([FromQuery] GetEstablishmentsPaginationsRequest request, CancellationToken cancellationToken)
