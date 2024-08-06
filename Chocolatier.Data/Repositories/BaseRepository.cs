@@ -7,7 +7,7 @@ namespace Chocolatier.Data.Repositories
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly ChocolatierContext ChocolatierContext;
-        private readonly DbSet<TEntity> DbSet;
+        protected readonly DbSet<TEntity> DbSet;
 
         protected BaseRepository(ChocolatierContext chocolatierContext)
         {

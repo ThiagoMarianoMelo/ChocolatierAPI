@@ -1,7 +1,7 @@
 ﻿namespace Chocolatier.Domain.ValueObjects
 {
 
-    public class Pagination<T> where T : class
+    public class Pagination<T>
     {
         public Pagination(IEnumerable<T> data, int total, int currentPage, int pageSize)
         {
