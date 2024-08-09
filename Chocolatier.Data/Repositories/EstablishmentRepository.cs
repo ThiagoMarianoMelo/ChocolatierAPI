@@ -24,9 +24,9 @@ namespace Chocolatier.Data.Repositories
             var queryCondiction = BuildQueryEstablishmentFilter(name, email);
 
             return UserManager.Users.AsNoTracking()
+                               .Where(queryCondiction)
                                .Select(es => new Establishment() { Id = es.Id, Email = es.Email, UserName = es.UserName, 
                                    EstablishmentType = es.EstablishmentType, Address = es.Address })
-                               .Where(queryCondiction)
                                .OrderBy(usr => usr.UserName);
         }
 
@@ -35,6 +35,7 @@ namespace Chocolatier.Data.Repositories
         {
 
             return est => !est.Id.Equals(AuthEstablishment.Id) &&
+                          !est.LockoutEnabled &&
                           (string.IsNullOrWhiteSpace(name) || est.UserName!.Contains(name)) &&
                           (string.IsNullOrWhiteSpace(email) || est.Email!.Contains(email));
         }

@@ -17,20 +17,21 @@ namespace Chocolatier.Data.Repositories
             var queryCondiction = BuildQueryIngredientTypeFilter(name);
 
             return DbSet.AsNoTracking()
+                    .Where(queryCondiction)
                     .Select(es => new IngredientType()
                     {
                         Id = es.Id,
                         Name = es.Name,
                         MeasurementeUnit = es.MeasurementeUnit
                     })
-                    .Where(queryCondiction)
                     .OrderBy(it => it.Name);
         }
 
         private Expression<Func<IngredientType, bool>> BuildQueryIngredientTypeFilter(string name)
         {
 
-            return it =>  (string.IsNullOrWhiteSpace(name) || it.Name!.Contains(name));
+            return it => it.IsActive &&
+                         (string.IsNullOrWhiteSpace(name) || it.Name!.Contains(name));
         }
     }
 }

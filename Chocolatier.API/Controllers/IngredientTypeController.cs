@@ -19,18 +19,27 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpPost]
-        //[FactoryAuthorization]
-        public async Task<IActionResult> Post(CreateIngredientTypeCommand request, CancellationToken cancellationToken)
+        [FactoryAuthorization]
+        public async Task<IActionResult> Post([FromBody] CreateIngredientTypeCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
         [HttpGet]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         [Route("List")]
         public async Task<IActionResult> GetList([FromQuery] GetIngredientTypesPaginationsRequest request, CancellationToken cancellationToken)
         {
             return GetActionResult(await IngredientTypeQueries.GetIngredientTypesPagination(request, cancellationToken));
+        }
+
+        [HttpDelete]
+        [FactoryAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            var request = new DeleteIngredientTypeCommand { Id = Id };
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
 }

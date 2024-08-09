@@ -27,10 +27,6 @@ namespace Chocolatier.Application.Handlers
             if (establishment is null)
                 return new Response(false, "Estabelecimento não encontrado tente novamente ou entre em contato com o suporte.", HttpStatusCode.BadRequest);
 
-            //Soft Delete or Delete?
-
-            //var result = await UserManager.DeleteAsync(establishment);
-
             var result = await UserManager.SetLockoutEnabledAsync(establishment, true);
 
             if (!result.Succeeded)

@@ -28,6 +28,7 @@ namespace Chocolatier.Application.Handlers
                     return new Response(false, request.Notifications);
 
                 var entity = Mapper.Map<IngredientType>(request);
+                entity.IsActive = true;
 
                 var resultEntity = await IngredientTypeRepository.Create(entity, cancellationToken);
 

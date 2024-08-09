@@ -4,5 +4,7 @@
     {
         Task<TEntity> Create(TEntity entity, CancellationToken cancellationToken);
         Task<int> SaveChanges(CancellationToken cancellationToken);
+        Task<TEntity?> GetEntityById(Guid Id, CancellationToken cancellationToken);
+        TEntity UpdateEntity(TEntity entity, CancellationToken cancellationToken);
     }
 }

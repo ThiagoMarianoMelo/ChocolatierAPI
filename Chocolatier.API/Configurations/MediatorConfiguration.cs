@@ -13,7 +13,11 @@ namespace Chocolatier.API.Configurations
         {
             services.AddScoped<IRequestHandler<CreateEstablishmentCommand, Response>, CreateEstablishmentHandler>();
             services.AddScoped<IRequestHandler<UpdateEstablishmentCommand, Response>, UpdateEstablishmentHandler>();
+            services.AddScoped<IRequestHandler<DeleteEstablishmentCommand, Response>, DeleteEstablishmentHandler>();
+
             services.AddScoped<IRequestHandler<CreateIngredientTypeCommand, Response>, CreateIngredientTypeHandler>();
+            services.AddScoped<IRequestHandler<DeleteIngredientTypeCommand, Response>, DeleteIngredientTypeHandler>();
+
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 
             services.AddScoped<IMediator, Mediator>();

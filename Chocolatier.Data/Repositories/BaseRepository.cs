@@ -24,5 +24,15 @@ namespace Chocolatier.Data.Repositories
         {
             return await ChocolatierContext.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<TEntity?> GetEntityById(Guid Id, CancellationToken cancellationToken)
+        {
+            return await DbSet.FindAsync([Id], cancellationToken);
+        }
+
+        public TEntity UpdateEntity(TEntity entity, CancellationToken cancellationToken)
+        {
+            return DbSet.Update(entity).Entity;
+        }
     }
 }

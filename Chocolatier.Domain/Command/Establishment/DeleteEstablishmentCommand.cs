@@ -1,7 +1,5 @@
-﻿using Chocolatier.Domain.Responses;
-using Flunt.Notifications;
+﻿using Flunt.Notifications;
 using Flunt.Validations;
-using MediatR;
 
 namespace Chocolatier.Domain.Command.Establishment
 {
