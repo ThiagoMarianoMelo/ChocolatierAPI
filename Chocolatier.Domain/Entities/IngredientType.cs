@@ -18,6 +18,7 @@ namespace Chocolatier.Domain.Entities
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public MeasurementeUnit MeasurementeUnit { get; set; }
+        public bool IsActive {  get; set; }
 
     }
 }
