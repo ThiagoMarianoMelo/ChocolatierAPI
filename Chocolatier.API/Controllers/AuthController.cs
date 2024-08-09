@@ -10,12 +10,12 @@ namespace Chocolatier.API.Controllers
     {
 
         public AuthController(IMediator mediator)
-            :base(mediator)
+            : base(mediator)
         {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }

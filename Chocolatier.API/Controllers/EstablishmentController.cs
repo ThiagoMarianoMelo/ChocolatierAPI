@@ -28,9 +28,10 @@ namespace Chocolatier.API.Controllers
 
         [HttpPatch]
         [HeadquarterAuthorization]
-        public async Task<IActionResult> Patch([FromQuery] string EstablishmentId, UpdateEstablishmentCommand request, CancellationToken cancellationToken)
+        [Route("{Id}")]
+        public async Task<IActionResult> Patch([FromQuery] string Id, [FromBody] UpdateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            request.Id = EstablishmentId;
+            request.Id = Id;
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
@@ -44,8 +45,10 @@ namespace Chocolatier.API.Controllers
 
         [HttpDelete]
         [HeadquarterAuthorization]
-        public async Task<IActionResult> Delete([FromQuery] DeleteEstablishmentCommand request, CancellationToken cancellationToken)
+        [Route("{Id}")]
+        public async Task<IActionResult> Delete([FromQuery] string Id, CancellationToken cancellationToken)
         {
+            var request = new DeleteEstablishmentCommand { Id = Id };
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
