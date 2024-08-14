@@ -3,6 +3,7 @@ using System;
 using Chocolatier.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chocolatier.Data.Migrations
 {
     [DbContext(typeof(ChocolatierContext))]
-    partial class ChocolatierContextModelSnapshot : ModelSnapshot
+    [Migration("20240814175758_Create_Ingredient")]
+    partial class Create_Ingredient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +116,7 @@ namespace Chocolatier.Data.Migrations
                     b.HasIndex("IngredientTypeId")
                         .IsUnique();
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("Chocolatier.Domain.Entities.IngredientType", b =>
@@ -134,7 +137,7 @@ namespace Chocolatier.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientType");
+                    b.ToTable("IngredientTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

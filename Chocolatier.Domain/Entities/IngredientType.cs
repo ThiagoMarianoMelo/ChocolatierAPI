@@ -2,7 +2,7 @@
 
 namespace Chocolatier.Domain.Entities
 {
-    public class IngredientType
+    public class IngredientType : BaseEntity
     {
         public IngredientType()
         {
@@ -15,10 +15,8 @@ namespace Chocolatier.Domain.Entities
             MeasurementeUnit = measurementeUnit;
         }
 
-        public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public MeasurementeUnit MeasurementeUnit { get; set; }
         public bool IsActive {  get; set; }
-
     }
 }
