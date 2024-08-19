@@ -1,5 +1,7 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.Ingredient;
+using Chocolatier.Domain.Interfaces.Queries;
+using Chocolatier.Domain.RequestFilter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,15 +11,26 @@ namespace Chocolatier.API.Controllers
     [Route("[controller]")]
     public class IngredientController : BaseController
     {
-        public IngredientController(IMediator mediator) : base(mediator)
+        private readonly IIngredientQueries IngredientQueries;
+
+        public IngredientController(IMediator mediator, IIngredientQueries ingredientQueries) : base(mediator)
         {
+            IngredientQueries = ingredientQueries;
         }
 
         [HttpPost]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         public async Task<IActionResult> Post([FromBody] CreateIngredientCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [FactoryAuthorization]
+        [Route("List")]
+        public async Task<IActionResult> GetList([FromQuery] GetIngredientPaginationRequest request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await IngredientQueries.GetIngredientPagination(request, cancellationToken));
         }
     }
 }

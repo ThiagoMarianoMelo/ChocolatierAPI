@@ -9,6 +9,7 @@ namespace Chocolatier.API.Configurations
         {
             services.AddScoped<IEstablishmentQueries, EstablishmentQueries>();
             services.AddScoped<IIngredientTypeQueries, IngredientTypeQueries>();
+            services.AddScoped<IIngredientQueries, IngredientQueries>();
         }
     }
 }

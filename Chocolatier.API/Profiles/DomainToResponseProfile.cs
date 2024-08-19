@@ -9,8 +9,10 @@ namespace Chocolatier.API.Profiles
         public DomainToResponseProfile()
         {
             CreateMap<Establishment, EstablishmentListDataResponse>();
-
             CreateMap<IngredientType, IngredientTypeListDataResponse>();
+
+            CreateMap<Ingredient, IngredientListDataResponse>()
+                .ForMember(dest => dest.ExpireAt, opt => opt.MapFrom(src => src.ExpireAt.ToLocalTime())); ;
         }
     }
 }
