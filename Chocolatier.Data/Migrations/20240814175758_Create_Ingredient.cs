@@ -29,12 +29,6 @@ namespace Chocolatier.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_IngredientTypeId",
-                table: "Ingredients",
-                column: "IngredientTypeId",
-                unique: true);
         }
 
         /// <inheritdoc />

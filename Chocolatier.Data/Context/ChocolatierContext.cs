@@ -18,7 +18,7 @@ namespace Chocolatier.Data.Context
 
             modelBuilder.Entity<Ingredient>().HasKey(i => i.Id);
             modelBuilder.Entity<Ingredient>().Property(i => i.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Ingredient>().HasOne(i => i.IngredientType).WithOne().HasForeignKey<Ingredient>(i => i.IngredientTypeId);
+            modelBuilder.Entity<Ingredient>().HasOne(i => i.IngredientType).WithMany().HasForeignKey(i => i.IngredientTypeId);
 
 
             base.OnModelCreating(modelBuilder);

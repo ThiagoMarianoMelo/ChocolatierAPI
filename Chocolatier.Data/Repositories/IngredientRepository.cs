@@ -21,6 +21,7 @@ namespace Chocolatier.Data.Repositories
                     {
                         Id = i.Id,
                         ExpireAt = i.ExpireAt,
+                        Amount = i.Amount,
                         IngredientType = i.IngredientType
                     })
                     .OrderBy(it => it.ExpireAt);
