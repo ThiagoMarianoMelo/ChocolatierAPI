@@ -20,7 +20,7 @@ namespace Chocolatier.API.Configurations
             services.AddScoped<IRequestHandler<DeleteIngredientTypeCommand, Response>, DeleteIngredientTypeHandler>();
 
             services.AddScoped<IRequestHandler<CreateIngredientCommand, Response>, CreateIngredientHandler>();
-
+            services.AddScoped<IRequestHandler<DeleteIngredientCommand, Response>, DeleteIngredientHandler>();
 
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 

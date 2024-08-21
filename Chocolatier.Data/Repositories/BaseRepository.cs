@@ -34,5 +34,10 @@ namespace Chocolatier.Data.Repositories
         {
             return DbSet.Update(entity).Entity;
         }
+
+        public TEntity DeleteEntity(TEntity entity, CancellationToken cancellationToken)
+        {
+            return DbSet.Remove(entity).Entity;
+        }
     }
 }

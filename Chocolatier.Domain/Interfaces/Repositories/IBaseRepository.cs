@@ -6,5 +6,6 @@
         Task<int> SaveChanges(CancellationToken cancellationToken);
         Task<TEntity?> GetEntityById(Guid Id, CancellationToken cancellationToken);
         TEntity UpdateEntity(TEntity entity, CancellationToken cancellationToken);
+        TEntity DeleteEntity(TEntity entity, CancellationToken cancellationToken);
     }
 }
