@@ -1,6 +1,5 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.Ingredient;
-using Chocolatier.Domain.Command.IngredientType;
 using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.RequestFilter;
 using MediatR;
@@ -42,5 +41,15 @@ namespace Chocolatier.API.Controllers
             var request = new DeleteIngredientCommand { Id = Id };
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
+
+        [HttpPatch]
+        [FactoryAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Patch([FromRoute] Guid Id, [FromBody] UpdateIngredientCommand request, CancellationToken cancellationToken)
+        {
+            request.Id = Id;
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
     }
 }

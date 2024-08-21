@@ -29,6 +29,8 @@ namespace Chocolatier.Application.Handlers
 
                 var entity = Mapper.Map<Ingredient>(request);
 
+                entity.ExpireAt = entity.ExpireAt.ToUniversalTime();
+
                 var resultEntity = await IngredientRepository.Create(entity, cancellationToken);
 
                 if (resultEntity is null)
