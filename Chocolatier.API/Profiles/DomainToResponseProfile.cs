@@ -12,7 +12,7 @@ namespace Chocolatier.API.Profiles
             CreateMap<IngredientType, IngredientTypeListDataResponse>();
 
             CreateMap<Ingredient, IngredientListDataResponse>()
-                .ForMember(dest => dest.ExpireAt, opt => opt.MapFrom(src => src.ExpireAt.ToLocalTime())); ;
+                .ForMember(dest => dest.ExpireAt, opt => opt.MapFrom(src => src.ExpireAt.ToLocalTime()));
         }
     }
 }
