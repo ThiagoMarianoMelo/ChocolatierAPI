@@ -9,40 +9,40 @@ namespace Chocolatier.Domain.Responses
 
         public Response(bool sucess, HttpStatusCode httpStatusCode)
         {
-            Sucess = sucess;
+            Success = sucess;
             HttpStatusCode = httpStatusCode;
         }
 
         public Response(bool sucess, object data, HttpStatusCode httpStatusCode)
         {
-            Sucess = sucess;
+            Success = sucess;
             Data = data;
             HttpStatusCode = httpStatusCode;
         }
 
         public Response(bool sucess, List<string> messages, HttpStatusCode httpStatusCode)
         {
-            Sucess = sucess;
+            Success = sucess;
             Messages = messages;
             HttpStatusCode = httpStatusCode;
         }
 
         public Response(bool sucess, IReadOnlyCollection<Notification> notifications)
         {
-            Sucess = sucess;
+            Success = sucess;
             HttpStatusCode = HttpStatusCode.BadRequest;  
             AddMessages(notifications);
         }
 
         public Response(bool sucess, object data, IReadOnlyCollection<Notification> notifications)
         {
-            Sucess = sucess;
+            Success = sucess;
             Data = data;
             HttpStatusCode = HttpStatusCode.BadRequest;
             AddMessages(notifications);
         }
 
-        public bool Sucess {  get; set; }
+        public bool Success {  get; set; }
         public List<string> Messages { get; set; } = [];
         public object? Data { get; set; }
 
