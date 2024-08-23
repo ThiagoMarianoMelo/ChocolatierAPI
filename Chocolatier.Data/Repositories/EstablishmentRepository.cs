@@ -26,7 +26,7 @@ namespace Chocolatier.Data.Repositories
             return UserManager.Users.AsNoTracking()
                                .Where(queryCondiction)
                                .Select(es => new Establishment() { Id = es.Id, Email = es.Email, UserName = es.UserName, 
-                                   EstablishmentType = es.EstablishmentType, Address = es.Address })
+                                   EstablishmentType = es.EstablishmentType, Address = es.Address, LockoutEnabled = es.LockoutEnabled })
                                .OrderBy(usr => usr.UserName);
         }
 
@@ -35,7 +35,6 @@ namespace Chocolatier.Data.Repositories
         {
 
             return est => !est.Id.Equals(AuthEstablishment.Id) &&
-                          !est.LockoutEnabled &&
                           (string.IsNullOrWhiteSpace(name) || est.UserName!.Contains(name)) &&
                           (string.IsNullOrWhiteSpace(email) || est.Email!.Contains(email));
         }
