@@ -14,7 +14,8 @@ namespace Chocolatier.API.Configurations
         {
             services.AddScoped<IRequestHandler<CreateEstablishmentCommand, Response>, CreateEstablishmentHandler>();
             services.AddScoped<IRequestHandler<UpdateEstablishmentCommand, Response>, UpdateEstablishmentHandler>();
-            services.AddScoped<IRequestHandler<DeleteEstablishmentCommand, Response>, DeleteEstablishmentHandler>();
+            services.AddScoped<IRequestHandler<DisableEstablishmentCommand, Response>, DisableEstablishmentHandler>();
+            services.AddScoped<IRequestHandler<EnableEstablishmentCommand, Response>, EnableEstablishmentHandler>();
 
             services.AddScoped<IRequestHandler<CreateIngredientTypeCommand, Response>, CreateIngredientTypeHandler>();
             services.AddScoped<IRequestHandler<DeleteIngredientTypeCommand, Response>, DeleteIngredientTypeHandler>();

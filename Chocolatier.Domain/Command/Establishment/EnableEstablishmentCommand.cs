@@ -3,7 +3,7 @@ using Flunt.Validations;
 
 namespace Chocolatier.Domain.Command.Establishment
 {
-    public class DeleteEstablishmentCommand : BaseComamnd
+    public class EnableEstablishmentCommand : BaseComamnd
     {
         public string Id { get; set; } = string.Empty;
 

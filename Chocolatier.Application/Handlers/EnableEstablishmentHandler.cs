@@ -7,16 +7,16 @@ using System.Net;
 
 namespace Chocolatier.Application.Handlers
 {
-    public class DeleteEstablishmentHandler : IRequestHandler<DeleteEstablishmentCommand, Response>
+    public class EnableEstablishmentHandler : IRequestHandler<EnableEstablishmentCommand, Response>
     {
         private readonly UserManager<Establishment> UserManager;
 
-        public DeleteEstablishmentHandler(UserManager<Establishment> userManager)
+        public EnableEstablishmentHandler(UserManager<Establishment> userManager)
         {
             UserManager = userManager;
         }
 
-        public async Task<Response> Handle(DeleteEstablishmentCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(EnableEstablishmentCommand request, CancellationToken cancellationToken)
         {
             request.Validate();
             if (!request.IsValid)
@@ -27,7 +27,7 @@ namespace Chocolatier.Application.Handlers
             if (establishment is null)
                 return new Response(false, "Estabelecimento não encontrado tente novamente ou entre em contato com o suporte.", HttpStatusCode.BadRequest);
 
-            var result = await UserManager.SetLockoutEnabledAsync(establishment, true);
+            var result = await UserManager.SetLockoutEnabledAsync(establishment, false);
 
             if (!result.Succeeded)
                 return new Response(false, result.Errors.Select(e => e.Description).ToList(), HttpStatusCode.InternalServerError);
