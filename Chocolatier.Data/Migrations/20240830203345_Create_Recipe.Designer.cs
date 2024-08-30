@@ -3,6 +3,7 @@ using System;
 using Chocolatier.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chocolatier.Data.Migrations
 {
     [DbContext(typeof(ChocolatierContext))]
-    partial class ChocolatierContextModelSnapshot : ModelSnapshot
+    [Migration("20240830203345_Create_Recipe")]
+    partial class Create_Recipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,30 +155,6 @@ namespace Chocolatier.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipe");
-                });
-
-            modelBuilder.Entity("Chocolatier.Domain.Entities.RecipeItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("IngredientTypeId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IngredientTypeId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("RecipeItem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -319,25 +298,6 @@ namespace Chocolatier.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("IngredientType");
-                });
-
-            modelBuilder.Entity("Chocolatier.Domain.Entities.RecipeItem", b =>
-                {
-                    b.HasOne("Chocolatier.Domain.Entities.IngredientType", "IngredientType")
-                        .WithMany()
-                        .HasForeignKey("IngredientTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Chocolatier.Domain.Entities.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IngredientType");
-
-                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
