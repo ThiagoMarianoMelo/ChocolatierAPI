@@ -6,7 +6,7 @@ using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.IngrdientHandlers
 {
     public class CreateIngredientHandler : IRequestHandler<CreateIngredientCommand, Response>
     {

@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.EstablishmentHandlers
 {
     public class UpdateEstablishmentHandler : IRequestHandler<UpdateEstablishmentCommand, Response>
     {

@@ -4,7 +4,7 @@ using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.IngredientTypeHandlers
 {
     public class DeleteIngredientTypeHandler : IRequestHandler<DeleteIngredientTypeCommand, Response>
     {

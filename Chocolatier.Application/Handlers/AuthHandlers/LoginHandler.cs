@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.AuthHandlers
 {
     public class LoginHandler : IRequestHandler<LoginCommand, Response>
     {

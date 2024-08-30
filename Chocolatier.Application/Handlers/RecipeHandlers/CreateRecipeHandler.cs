@@ -6,7 +6,7 @@ using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.RecipeHandlers
 {
     public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, Response>
     {
@@ -47,7 +47,7 @@ namespace Chocolatier.Application.Handlers
                 if (result <= 0)
                     return new Response(true, ["Erro ao cadastrar receita."], HttpStatusCode.InternalServerError);
 
-                return new Response(true, HttpStatusCode.Created);
+                return new Response(true, recipeResult.Id ,HttpStatusCode.Created);
             }
             catch (Exception)
             {

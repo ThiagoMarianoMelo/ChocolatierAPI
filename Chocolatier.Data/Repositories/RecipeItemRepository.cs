@@ -28,5 +28,10 @@ namespace Chocolatier.Data.Repositories
                     .OrderBy(ri => ri.IngredientType!.Name)
                     .ToListAsync(cancellationToken);
         }
+
+        public void DeleteItensFromRecipe(Guid recipeId)
+        {
+            DbSet.RemoveRange(DbSet.Where(ri => ri.RecipeId == recipeId));
+        }
     }
 }

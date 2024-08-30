@@ -5,7 +5,7 @@ using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
 
-namespace Chocolatier.Application.Handlers
+namespace Chocolatier.Application.Handlers.IngrdientHandlers
 {
     public class UpdateIngredientHandler : IRequestHandler<UpdateIngredientCommand, Response>
     {
@@ -39,7 +39,7 @@ namespace Chocolatier.Application.Handlers
         {
 
             if (request.IngredientTypeId != Guid.Empty)
-                ingredient.IngredientTypeId= request.IngredientTypeId;
+                ingredient.IngredientTypeId = request.IngredientTypeId;
 
             if (request.Amount > 0)
                 ingredient.Amount = request.Amount;

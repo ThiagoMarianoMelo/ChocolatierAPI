@@ -15,7 +15,7 @@ namespace Chocolatier.API.Profiles
             CreateMap<CreateIngredientTypeCommand, IngredientType>();
             CreateMap<CreateIngredientCommand, Ingredient>();
             CreateMap<CreateRecipeCommand, Recipe>();
-            CreateMap<CreateRecipeItemObject, RecipeItem>();
+            CreateMap<RecipteItemCommandHelper, RecipeItem>();
         }
     }
 }
