@@ -7,7 +7,7 @@ namespace Chocolatier.Application.Queries
 {
     public abstract class BaseQueries<Entity, Response>
     {
-        private readonly IMapper Mapper;
+        protected readonly IMapper Mapper;
 
         protected BaseQueries(IMapper mapper)
         {
