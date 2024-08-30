@@ -3,6 +3,7 @@ using Chocolatier.Domain.Command.Auth;
 using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Command.Ingredient;
 using Chocolatier.Domain.Command.IngredientType;
+using Chocolatier.Domain.Command.Recipe;
 using Chocolatier.Domain.Responses;
 using MediatR;
 
@@ -23,6 +24,8 @@ namespace Chocolatier.API.Configurations
             services.AddScoped<IRequestHandler<CreateIngredientCommand, Response>, CreateIngredientHandler>();
             services.AddScoped<IRequestHandler<DeleteIngredientCommand, Response>, DeleteIngredientHandler>();
             services.AddScoped<IRequestHandler<UpdateIngredientCommand, Response>, UpdateIngredientHandler>();
+
+            services.AddScoped<IRequestHandler<CreateRecipeCommand, Response>, CreateRecipeHandler>();
 
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 

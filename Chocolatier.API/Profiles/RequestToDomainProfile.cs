@@ -2,6 +2,7 @@
 using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Command.Ingredient;
 using Chocolatier.Domain.Command.IngredientType;
+using Chocolatier.Domain.Command.Recipe;
 using Chocolatier.Domain.Entities;
 
 namespace Chocolatier.API.Profiles
@@ -13,6 +14,8 @@ namespace Chocolatier.API.Profiles
             CreateMap<CreateEstablishmentCommand, Establishment>();
             CreateMap<CreateIngredientTypeCommand, IngredientType>();
             CreateMap<CreateIngredientCommand, Ingredient>();
+            CreateMap<CreateRecipeCommand, Recipe>();
+            CreateMap<CreateRecipeItemObject, RecipeItem>();
         }
     }
 }
