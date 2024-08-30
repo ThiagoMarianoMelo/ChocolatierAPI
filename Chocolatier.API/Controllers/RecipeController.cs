@@ -1,6 +1,7 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Application.Queries;
 using Chocolatier.Domain.Command.Ingredient;
+using Chocolatier.Domain.Command.IngredientType;
 using Chocolatier.Domain.Command.Recipe;
 using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.RequestFilter;
@@ -21,14 +22,14 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpPost]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         public async Task<IActionResult> Post([FromBody] CreateRecipeCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
         [HttpGet]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         [Route("List")]
         public async Task<IActionResult> GetList([FromQuery] GetRecipesPaginationRequest request, CancellationToken cancellationToken)
         {
@@ -36,7 +37,7 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpGet]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         [Route("Itens")]
         public async Task<IActionResult> GetItens([FromQuery] Guid Id, CancellationToken cancellationToken)
         {
@@ -44,11 +45,20 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpPut]
-        //[FactoryAuthorization]
+        [FactoryAuthorization]
         [Route("{Id}")]
         public async Task<IActionResult> Put([FromRoute] Guid Id, [FromBody] UpdateRecipeCommand request, CancellationToken cancellationToken)
         {
             request.Id = Id;
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpDelete]
+        [FactoryAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            var request = new DeleteRecipeCommand { Id = Id };
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }

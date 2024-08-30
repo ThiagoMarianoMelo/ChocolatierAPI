@@ -28,7 +28,7 @@ namespace Chocolatier.Data.Repositories
 
         private Expression<Func<Recipe, bool>> BuildQueryIngredientTypeFilter(string name)
         {
-            return r => (string.IsNullOrWhiteSpace(name) || r.Name!.Contains(name));
+            return r => r.IsActive && (string.IsNullOrWhiteSpace(name) || r.Name!.Contains(name));
         }
     }
 }

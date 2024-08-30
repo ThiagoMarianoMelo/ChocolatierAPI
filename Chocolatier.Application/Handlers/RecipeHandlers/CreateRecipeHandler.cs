@@ -31,6 +31,8 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
 
                 var recipe = Mapper.Map<Recipe>(request);
 
+                recipe.IsActive = true;
+
                 var recipeResult = await RecipeRepository.Create(recipe, cancellationToken);
 
                 if (recipeResult is null)
