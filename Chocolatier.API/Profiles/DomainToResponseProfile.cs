@@ -15,6 +15,8 @@ namespace Chocolatier.API.Profiles
 
             CreateMap<Ingredient, IngredientListDataResponse>()
                .ForMember(dest => dest.ExpireAt, opt => opt.MapFrom(src => src.ExpireAt.ToLocalTime()));
+
+            CreateMap<Recipe, RecipesListDataResponse>();
         }
     }
 }
