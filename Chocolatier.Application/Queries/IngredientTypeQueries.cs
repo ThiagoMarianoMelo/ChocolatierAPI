@@ -11,12 +11,10 @@ namespace Chocolatier.Application.Queries
 {
     public class IngredientTypeQueries : BaseQueries<IngredientType, IngredientTypeListDataResponse>, IIngredientTypeQueries
     {
-        private readonly IMapper Mapper;
         private readonly IIngredientTypeRepository IngredientTypeRepository;
 
         public IngredientTypeQueries(IMapper mapper, IIngredientTypeRepository ingredientTypeRepository) :base(mapper)
         {
-            Mapper = mapper;
             IngredientTypeRepository = ingredientTypeRepository; 
         }
 
