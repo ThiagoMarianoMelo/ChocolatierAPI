@@ -9,22 +9,22 @@ using System.Net;
 
 namespace Chocolatier.Application.Queries
 {
-    public class IngredientQueries : BaseQueries<Ingredient, IngredientListDataResponse>, IIngredientQueries
+    public class ProductQueries : BaseQueries<Product, ProductListDataResponse>, IProductQueries
     {
-        private readonly IIngredientRepository IngredientRepository;
+        private readonly IProductRepository ProductRepository;
 
-        public IngredientQueries(IMapper mapper, IIngredientRepository ingredientRepository) : base(mapper)
+        public ProductQueries(IMapper mapper, IProductRepository productRepository) : base(mapper)
         {
-            IngredientRepository = ingredientRepository;
+            ProductRepository = productRepository;
         }
-        public async Task<Response> GetIngredientPagination(GetIngredientPaginationRequest request, CancellationToken cancellationToken)
+        public async Task<Response> GetIngredientPagination(GetProductsPaginationRequest request, CancellationToken cancellationToken)
         {
             try
             {
                 if (request.CurrentPage <= 0)
                     return new Response(false, "A página não pode ser anterior a pagina inicial 0.", HttpStatusCode.BadRequest);
 
-                var queryableData = IngredientRepository.GetQueryableIngredientByFilter(request.InitialExpiratonDate, request.FinalExpiratonDate, request.IngredientTypeId);
+                var queryableData = ProductRepository.GetQueryableProductsByFilter(request.InitialExpiratonDate, request.FinalExpiratonDate, request.Name);
 
                 var result = await BaseGetPaginantionDataByQueryable(queryableData, request, cancellationToken);
 

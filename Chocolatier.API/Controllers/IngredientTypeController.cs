@@ -26,7 +26,7 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpGet]
-        [FactoryAuthorization]
+        [FactoryOrStoreAuthorization]
         [Route("List")]
         public async Task<IActionResult> GetList([FromQuery] GetIngredientTypesPaginationsRequest request, CancellationToken cancellationToken)
         {
