@@ -9,7 +9,7 @@ namespace Chocolatier.Domain.Command.Recipe
         [JsonIgnore]
         public Guid Id { get; set; }
         public string? Name { get; set; }
-        public List<RecipteItemCommandHelper>? RecipeItems { get; set; }
+        public List<RecipteItemCommand>? RecipeItems { get; set; }
 
         public void Validate()
         {

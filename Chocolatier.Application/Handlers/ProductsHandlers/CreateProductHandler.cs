@@ -14,12 +14,14 @@ namespace Chocolatier.Application.Handlers.ProductsHandlers
         private readonly IAuthEstablishment AuthEstablishment;
         private readonly IMapper Mapper;
         private readonly IProductRepository ProductRepository;
+        private readonly IRecipeRepository RecipeRepository;
 
-        public CreateProductHandler(IAuthEstablishment authEstablishment, IMapper mapper, IProductRepository productRepository)
+        public CreateProductHandler(IAuthEstablishment authEstablishment, IMapper mapper, IProductRepository productRepository, IRecipeRepository recipeRepository)
         {
             AuthEstablishment = authEstablishment;
             Mapper = mapper;
             ProductRepository = productRepository;
+            RecipeRepository = recipeRepository;
         }
 
         public async Task<Response> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -29,6 +31,11 @@ namespace Chocolatier.Application.Handlers.ProductsHandlers
                 request.Validate();
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
+
+                var RecipeIsActive = await RecipeRepository.IsActiveById(request.RecipeId, cancellationToken);
+
+                if (!RecipeIsActive)
+                    return new Response(true, ["A receita escolhida não é valida."], HttpStatusCode.BadRequest);
 
                 var product = Mapper.Map<Product>(request);
 

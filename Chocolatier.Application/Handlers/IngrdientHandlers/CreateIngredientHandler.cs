@@ -12,11 +12,13 @@ namespace Chocolatier.Application.Handlers.IngrdientHandlers
     {
         private readonly IIngredientRepository IngredientRepository;
         private readonly IMapper Mapper;
+        private readonly IIngredientTypeRepository IngredientTypeRepository;
 
-        public CreateIngredientHandler(IIngredientRepository ingredientRepository, IMapper mapper)
+        public CreateIngredientHandler(IIngredientRepository ingredientRepository, IMapper mapper, IIngredientTypeRepository ingredientTypeRepository)
         {
             IngredientRepository = ingredientRepository;
             Mapper = mapper;
+            IngredientTypeRepository = ingredientTypeRepository;
         }
 
         public async Task<Response> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
@@ -26,6 +28,11 @@ namespace Chocolatier.Application.Handlers.IngrdientHandlers
                 request.Validate();
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
+
+                var ingredientTypeIsActive = await IngredientTypeRepository.IsActiveById(request.IngredientTypeId, cancellationToken);
+
+                if(!ingredientTypeIsActive)
+                    return new Response(true, ["Tipo de ingrediente escolhido não é valido."], HttpStatusCode.BadRequest);
 
                 var entity = Mapper.Map<Ingredient>(request);
 

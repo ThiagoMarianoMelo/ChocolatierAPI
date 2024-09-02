@@ -11,14 +11,16 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
     public class CreateRecipeHandler : IRequestHandler<CreateRecipeCommand, Response>
     {
         private readonly IRecipeItemRepository RecipeItemRepository;
+        private readonly IIngredientTypeRepository IngredientTypeRepository;
         private readonly IRecipeRepository RecipeRepository;
         private readonly IMapper Mapper;
 
-        public CreateRecipeHandler(IRecipeItemRepository recipeItemRepository, IRecipeRepository recipeRepository, IMapper mapper)
+        public CreateRecipeHandler(IRecipeItemRepository recipeItemRepository, IRecipeRepository recipeRepository, IMapper mapper, IIngredientTypeRepository ingredientTypeRepository)
         {
             RecipeItemRepository = recipeItemRepository;
             RecipeRepository = recipeRepository;
             Mapper = mapper;
+            IngredientTypeRepository = ingredientTypeRepository;
         }
 
         public async Task<Response> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
@@ -28,6 +30,11 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
                 request.Validate();
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
+
+                var ingredientTypeVerifiyResponse = await VerifyIngredientTypes(request.RecipeItems!.Select(rt => rt.IngredientTypeId), cancellationToken);
+
+                if (!ingredientTypeVerifiyResponse.Success)
+                    return ingredientTypeVerifiyResponse;
 
                 var recipe = Mapper.Map<Recipe>(request);
 
@@ -55,6 +62,18 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
             {
                 return new Response(false, "Erro interno no processamento, entre em contato com o suporte.", HttpStatusCode.InternalServerError);
             }
+        }
+
+        private async Task<Response> VerifyIngredientTypes(IEnumerable<Guid> ingrendientTypeIds, CancellationToken cancellationToken)
+        {
+            foreach (var itId in ingrendientTypeIds)
+            {
+                var isActive = await IngredientTypeRepository.IsActiveById(itId, cancellationToken);
+
+                if (!isActive) return new Response(false, [$"O tipo de ingrediente {itId} não está ativo, entre em contato com o suporte"], HttpStatusCode.BadRequest);
+            }
+
+            return new Response(true);
         }
     }
 }

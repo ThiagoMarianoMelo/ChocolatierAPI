@@ -10,10 +10,12 @@ namespace Chocolatier.Application.Handlers.IngrdientHandlers
     public class UpdateIngredientHandler : IRequestHandler<UpdateIngredientCommand, Response>
     {
         private readonly IIngredientRepository IngredienteRepository;
+        private readonly IIngredientTypeRepository IngredientTypeRepository;
 
-        public UpdateIngredientHandler(IIngredientRepository ingredienteRepository)
+        public UpdateIngredientHandler(IIngredientRepository ingredienteRepository, IIngredientTypeRepository ingredientTypeRepository)
         {
             IngredienteRepository = ingredienteRepository;
+            IngredientTypeRepository = ingredientTypeRepository;
         }
 
         public async Task<Response> Handle(UpdateIngredientCommand request, CancellationToken cancellationToken)
@@ -21,6 +23,14 @@ namespace Chocolatier.Application.Handlers.IngrdientHandlers
             request.Validate();
             if (!request.IsValid)
                 return new Response(false, request.Notifications);
+
+            if(request.IngredientTypeId != Guid.Empty)
+            {
+                var ingredientTypeIsActive = await IngredientTypeRepository.IsActiveById(request.IngredientTypeId, cancellationToken);
+
+                if (!ingredientTypeIsActive)
+                    return new Response(true, ["Tipo de ingrediente escolhido não é valido."], HttpStatusCode.BadRequest);
+            }
 
             var ingredient = await IngredienteRepository.GetEntityById(request.Id, cancellationToken);
 
@@ -40,6 +50,7 @@ namespace Chocolatier.Application.Handlers.IngrdientHandlers
 
             if (request.IngredientTypeId != Guid.Empty)
                 ingredient.IngredientTypeId = request.IngredientTypeId;
+           
 
             if (request.Amount > 0)
                 ingredient.Amount = request.Amount;

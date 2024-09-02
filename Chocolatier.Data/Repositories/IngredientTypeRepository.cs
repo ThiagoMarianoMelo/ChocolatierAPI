@@ -27,6 +27,8 @@ namespace Chocolatier.Data.Repositories
                     .OrderBy(it => it.Name);
         }
 
+        public async Task<bool> IsActiveById(Guid Id, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Id == Id && it.IsActive);
+
         private Expression<Func<IngredientType, bool>> BuildQueryIngredientTypeFilter(string name)
         {
 

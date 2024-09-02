@@ -7,6 +7,10 @@ namespace Chocolatier.Domain.Responses
     public class Response
     {
 
+        public Response(bool sucess)
+        {
+            Success = sucess;
+        }
         public Response(bool sucess, HttpStatusCode httpStatusCode)
         {
             Success = sucess;
