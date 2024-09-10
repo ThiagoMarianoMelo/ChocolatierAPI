@@ -33,6 +33,15 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await ProductQueries.GetIngredientPagination(request, cancellationToken));
         }
 
+        [HttpDelete]
+        [FactoryOrStoreAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            var request = new DeleteProductCommand { Id = Id };
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
         [HttpPatch]
         [FactoryOrStoreAuthorization]
         [Route("{Id}")]

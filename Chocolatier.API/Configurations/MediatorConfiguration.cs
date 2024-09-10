@@ -37,6 +37,7 @@ namespace Chocolatier.API.Configurations
 
             services.AddScoped<IRequestHandler<CreateProductCommand, Response>, CreateProductHandler>();
             services.AddScoped<IRequestHandler<UpdateProductCommand, Response>, UpdateProductHandler>();
+            services.AddScoped<IRequestHandler<DeleteProductCommand, Response>, DeleteProductHandler>();
 
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 
