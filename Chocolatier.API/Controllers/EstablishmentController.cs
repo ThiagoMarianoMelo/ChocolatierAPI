@@ -43,7 +43,7 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await EstablishmentQueries.GetEstablishmentsPaginations(request, cancellationToken));
         }
 
-        [HttpPut]
+        [HttpDelete]
         [HeadquarterAuthorization]
         [Route("Disable/{Id}")]
         public async Task<IActionResult> Disable([FromRoute] string Id, CancellationToken cancellationToken)
@@ -52,7 +52,7 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
-        [HttpPut]
+        [HttpPatch]
         [HeadquarterAuthorization]
         [Route("Enable/{Id}")]
         public async Task<IActionResult> Enable([FromRoute] string Id, CancellationToken cancellationToken)
