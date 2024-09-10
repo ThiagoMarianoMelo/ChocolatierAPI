@@ -52,7 +52,7 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
-        [HttpPatch]
+        [HttpPut]
         [HeadquarterAuthorization]
         [Route("Enable/{Id}")]
         public async Task<IActionResult> Enable([FromRoute] string Id, CancellationToken cancellationToken)
