@@ -32,5 +32,14 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await ProductQueries.GetIngredientPagination(request, cancellationToken));
         }
+
+        [HttpPatch]
+        [FactoryOrStoreAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Patch([FromRoute] Guid Id, [FromBody] UpdateProductCommand request, CancellationToken cancellationToken)
+        {
+            request.Id = Id;
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
     }
 }
