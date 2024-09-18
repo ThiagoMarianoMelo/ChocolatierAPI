@@ -27,6 +27,13 @@ namespace Chocolatier.Application.Handlers.IngredientTypeHandlers
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
 
+                request.Name = request.Name.Trim();
+
+                var isDuplicatedName = await IngredientTypeRepository.IsDuplicatedName(request.Name, cancellationToken);
+
+                if (isDuplicatedName)
+                    return new Response(true, [$"Tipo de ingrediente {request.Name} já está cadastrado."], HttpStatusCode.InternalServerError);
+
                 var entity = Mapper.Map<IngredientType>(request);
                 entity.IsActive = true;
 

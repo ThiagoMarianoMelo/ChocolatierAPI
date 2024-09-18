@@ -27,7 +27,10 @@ namespace Chocolatier.Data.Repositories
                     .OrderBy(it => it.Name);
         }
 
-        public async Task<bool> IsActiveById(Guid Id, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Id == Id && it.IsActive);
+        public async Task<bool> IsActiveById(Guid Id, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Id == Id && it.IsActive, cancellationToken);
+
+        public async Task<bool> IsDuplicatedName(string IngredientTypeName, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Name == IngredientTypeName && it.IsActive, cancellationToken);
+
 
         private Expression<Func<IngredientType, bool>> BuildQueryIngredientTypeFilter(string name)
         {

@@ -1,5 +1,4 @@
 ﻿using Chocolatier.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Chocolatier.Domain.Interfaces.Repositories
 {
@@ -8,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces.Repositories
         IQueryable<IngredientType> GetQueryableIngredientTypesByFilter(string name);
 
         Task<bool> IsActiveById(Guid Id, CancellationToken cancellationToken);
+        Task<bool> IsDuplicatedName(string IngredientTypeName, CancellationToken cancellationToken);
     }
 }
