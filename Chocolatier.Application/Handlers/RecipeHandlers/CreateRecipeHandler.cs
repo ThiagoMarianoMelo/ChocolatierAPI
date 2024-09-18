@@ -57,7 +57,7 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
                 if (result <= 0)
                     return new Response(true, ["Erro ao cadastrar receita."], HttpStatusCode.InternalServerError);
 
-                return new Response(true, recipeResult.Id ,HttpStatusCode.Created);
+                return new Response(true, recipeResult.Id, HttpStatusCode.Created);
             }
             catch (Exception)
             {
@@ -73,6 +73,9 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
 
                 if (!isActive) return new Response(false, [$"O tipo de ingrediente {itId} não está ativo, entre em contato com o suporte"], HttpStatusCode.BadRequest);
             }
+
+            if (ingrendientTypeIds.Count() != ingrendientTypeIds.Distinct().Count())
+                return new Response(false, ["Existem itens duplicados na receita."], HttpStatusCode.BadRequest);
 
             return new Response(true);
         }
