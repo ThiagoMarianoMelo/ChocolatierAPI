@@ -37,6 +37,21 @@ namespace Chocolatier.Data.Repositories
                         Amount = i.Amount,
                     }).SumAsync(i => i.Amount, cancellationToken);
         }
+        public async Task<List<Ingredient>> GetDisponibleIngredientsByIngredientType(Guid ingredientTypeId, CancellationToken cancellationToken)
+        {
+
+            return await DbSet.AsNoTracking()
+                    .Where(i => i.ExpireAt >= DateTime.UtcNow && i.IngredientTypeId == ingredientTypeId)
+                    .Select(i => new Ingredient()
+                    {
+                        Id = i.Id,
+                        Amount = i.Amount,
+                        ExpireAt = i.ExpireAt,
+                        IngredientTypeId = ingredientTypeId
+                    })
+                    .OrderByDescending(i => i.Amount)
+                    .ToListAsync(cancellationToken);
+        }
 
         private Expression<Func<Ingredient, bool>> BuildQueryIngredientTypeFilter(DateTime initialDate, DateTime finalDate, Guid ingredientTypeId)
         {

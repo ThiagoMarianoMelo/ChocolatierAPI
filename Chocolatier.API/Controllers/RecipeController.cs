@@ -66,5 +66,14 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await RecipeQueries.GetMissingIngredientsFromRecipe(Id, cancellationToken));
         }
+
+        [HttpPost]
+        [FactoryAuthorization]
+        [Route("{Id}/MakeRecipe")]
+        public async Task<IActionResult> MakeRecipe([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            var request = new MakeRecipeCommand { Id = Id };
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
     }
 }
