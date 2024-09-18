@@ -44,7 +44,7 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await RecipeQueries.GetRecipeItens(Id, cancellationToken));
         }
 
-        [HttpPatch]
+        [HttpPut]
         [FactoryAuthorization]
         [Route("{Id}")]
         public async Task<IActionResult> Patch([FromRoute] Guid Id, [FromBody] UpdateRecipeCommand request, CancellationToken cancellationToken)

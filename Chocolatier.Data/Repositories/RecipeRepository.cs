@@ -21,7 +21,8 @@ namespace Chocolatier.Data.Repositories
                     .Select(es => new Recipe()
                     {
                         Id = es.Id,
-                        Name = es.Name
+                        Name = es.Name,
+                        QuantityOfIngredients = es.QuantityOfIngredients
                     })
                     .OrderBy(it => it.Name);
         }

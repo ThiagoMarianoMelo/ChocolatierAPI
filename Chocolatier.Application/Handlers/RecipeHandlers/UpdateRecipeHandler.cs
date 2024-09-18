@@ -53,6 +53,8 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
 
                 recipeItens.ForEach(async ri => await RecipeItemRepository.Create(ri, cancellationToken));
 
+                recipe.QuantityOfIngredients = recipeItens?.Count ?? 0;
+
                 var result = await RecipeRepository.SaveChanges(cancellationToken);
 
                 if (result <= 0)
