@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Chocolatier.Application.Queries
 {
-    public class IngredientQueries : BaseQueries<Ingredient, IngredientListDataResponse>, IIngredientQueries
+    public class IngredientQueries : BasePaginationQueries<Ingredient, IngredientListDataResponse>, IIngredientQueries
     {
         private readonly IIngredientRepository IngredientRepository;
 

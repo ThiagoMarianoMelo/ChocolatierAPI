@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chocolatier.Application.Queries
 {
-    public abstract class BaseQueries<Entity, Response>
+    public abstract class BasePaginationQueries<Entity, Response>
     {
         protected readonly IMapper Mapper;
 
-        protected BaseQueries(IMapper mapper)
+        protected BasePaginationQueries(IMapper mapper)
         {
             Mapper = mapper;
         }

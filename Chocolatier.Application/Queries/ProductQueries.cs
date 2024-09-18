@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Chocolatier.Application.Queries
 {
-    public class ProductQueries : BaseQueries<Product, ProductListDataResponse>, IProductQueries
+    public class ProductQueries : BasePaginationQueries<Product, ProductListDataResponse>, IProductQueries
     {
         private readonly IProductRepository ProductRepository;
 
