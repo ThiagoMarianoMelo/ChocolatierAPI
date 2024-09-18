@@ -1,7 +1,4 @@
 ﻿using Chocolatier.API.Authorization;
-using Chocolatier.Application.Queries;
-using Chocolatier.Domain.Command.Ingredient;
-using Chocolatier.Domain.Command.IngredientType;
 using Chocolatier.Domain.Command.Recipe;
 using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.RequestFilter;
@@ -60,6 +57,14 @@ namespace Chocolatier.API.Controllers
         {
             var request = new DeleteRecipeCommand { Id = Id };
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [FactoryAuthorization]
+        [Route("{Id}/MissingIngredients")]
+        public async Task<IActionResult> MissingIngredients([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await RecipeQueries.GetMissingIngredientsFromRecipe(Id, cancellationToken));
         }
     }
 }

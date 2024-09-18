@@ -19,11 +19,13 @@ namespace Chocolatier.Data.Repositories
                     {
                         Id = ri.Id,
                         Quantity = ri.Quantity,
+                        IngredientTypeId = ri.IngredientTypeId,
                         IngredientType = new IngredientType()
                         {
-                            Name = ri.IngredientType.Name,
+                            Name = ri.IngredientType!.Name,
                             MeasurementeUnit = ri.IngredientType.MeasurementeUnit
                         }
+                        
                     })
                     .OrderBy(ri => ri.IngredientType!.Name)
                     .ToListAsync(cancellationToken);

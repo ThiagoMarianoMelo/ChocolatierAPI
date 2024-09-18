@@ -7,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces.Queries
     {
         Task<Response> GetRecipesPagination(GetRecipesPaginationRequest request, CancellationToken cancellationToken);
         Task<Response> GetRecipeItens(Guid recipeId, CancellationToken cancellationToken);
+        Task<Response> GetMissingIngredientsFromRecipe(Guid recipeId, CancellationToken cancellationToken);
     }
 }
