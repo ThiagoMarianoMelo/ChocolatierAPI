@@ -1,7 +1,6 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.IngredientType;
 using Chocolatier.Domain.Interfaces.Queries;
-using Chocolatier.Domain.RequestFilter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +27,9 @@ namespace Chocolatier.API.Controllers
         [HttpGet]
         [FactoryOrStoreAuthorization]
         [Route("List")]
-        public async Task<IActionResult> GetList([FromQuery] GetIngredientTypesPaginationsRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetList(CancellationToken cancellationToken)
         {
-            return GetActionResult(await IngredientTypeQueries.GetIngredientTypesPagination(request, cancellationToken));
+            return GetActionResult(await IngredientTypeQueries.GetIngredientTypes(cancellationToken));
         }
 
         [HttpDelete]

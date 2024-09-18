@@ -9,15 +9,13 @@ using System.Net;
 
 namespace Chocolatier.Application.Queries
 {
-    public class EstablishmentQueries : BaseQueries<Establishment, EstablishmentListDataResponse>, IEstablishmentQueries
+    public class EstablishmentQueries : BasePaginationQueries<Establishment, EstablishmentListDataResponse>, IEstablishmentQueries
     {
         private readonly IEstablishmentRepository EstablishmentRepository;
-        private readonly IMapper Mapper;
 
         public EstablishmentQueries(IEstablishmentRepository establishmentRepository, IMapper mapper):base(mapper)
         {
             EstablishmentRepository = establishmentRepository;
-            Mapper = mapper;
         }
 
         public async Task<Response> GetEstablishmentsPaginations(GetEstablishmentsPaginationsRequest request, CancellationToken cancellationToken)

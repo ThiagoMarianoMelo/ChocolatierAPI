@@ -5,6 +5,6 @@ namespace Chocolatier.Domain.Interfaces.Queries
 {
     public interface IIngredientTypeQueries
     {
-        Task<Response> GetIngredientTypesPagination(GetIngredientTypesPaginationsRequest request, CancellationToken cancellationToken);
+        Task<Response> GetIngredientTypes(CancellationToken cancellationToken);
     }
 }

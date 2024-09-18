@@ -2,7 +2,6 @@
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Chocolatier.Data.Repositories
 {
@@ -12,31 +11,25 @@ namespace Chocolatier.Data.Repositories
         {
         }
 
-        public IQueryable<IngredientType> GetQueryableIngredientTypesByFilter(string name)
+        public async Task<IEnumerable<IngredientType>> GetIngredientTypes(CancellationToken cancellationToken)
         {
-            var queryCondiction = BuildQueryIngredientTypeFilter(name);
 
-            return DbSet.AsNoTracking()
-                    .Where(queryCondiction)
+            return await DbSet.AsNoTracking()
+                    .Where(it => it.IsActive)
                     .Select(es => new IngredientType()
                     {
                         Id = es.Id,
                         Name = es.Name,
-                        MeasurementeUnit = es.MeasurementeUnit
+                        MeasurementeUnit = es.MeasurementeUnit,
+                        IsActive = es.IsActive
                     })
-                    .OrderBy(it => it.Name);
+                    .OrderBy(it => it.Name)
+                    .ToListAsync(cancellationToken);
         }
 
         public async Task<bool> IsActiveById(Guid Id, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Id == Id && it.IsActive, cancellationToken);
 
         public async Task<bool> IsDuplicatedName(string IngredientTypeName, CancellationToken cancellationToken) => await DbSet.AnyAsync(it => it.Name == IngredientTypeName && it.IsActive, cancellationToken);
 
-
-        private Expression<Func<IngredientType, bool>> BuildQueryIngredientTypeFilter(string name)
-        {
-
-            return it => it.IsActive &&
-                         (string.IsNullOrWhiteSpace(name) || it.Name!.Contains(name));
-        }
     }
 }
