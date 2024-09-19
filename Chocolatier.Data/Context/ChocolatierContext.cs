@@ -14,6 +14,7 @@ namespace Chocolatier.Data.Context
         public DbSet<RecipeItem> RecipeItem { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Order> Order { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,7 +42,12 @@ namespace Chocolatier.Data.Context
             modelBuilder.Entity<Order>().Property(o => o.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Order>().HasOne(ri => ri.Establishment).WithMany().HasForeignKey(i => i.RequestedById);
 
+            modelBuilder.Entity<OrderItem>().HasKey(oi => oi.Id);
+            modelBuilder.Entity<OrderItem>().Property(oi => oi.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<OrderItem>().HasOne(oi => oi.Recipe).WithMany().HasForeignKey(i => i.RecipeId);
+            modelBuilder.Entity<OrderItem>().HasOne(i => i.Order).WithMany().HasForeignKey(i => i.OrderId);
+
             base.OnModelCreating(modelBuilder);
-        }   
+        }
     }
 }
