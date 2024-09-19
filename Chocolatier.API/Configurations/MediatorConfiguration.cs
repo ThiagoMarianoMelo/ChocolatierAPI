@@ -2,12 +2,14 @@
 using Chocolatier.Application.Handlers.EstablishmentHandlers;
 using Chocolatier.Application.Handlers.IngrdientHandlers;
 using Chocolatier.Application.Handlers.IngredientTypeHandlers;
+using Chocolatier.Application.Handlers.OrdersHandlers;
 using Chocolatier.Application.Handlers.ProductsHandlers;
 using Chocolatier.Application.Handlers.RecipeHandlers;
 using Chocolatier.Domain.Command.Auth;
 using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Command.Ingredient;
 using Chocolatier.Domain.Command.IngredientType;
+using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Command.Product;
 using Chocolatier.Domain.Command.Recipe;
 using Chocolatier.Domain.Responses;
@@ -39,6 +41,8 @@ namespace Chocolatier.API.Configurations
             services.AddScoped<IRequestHandler<CreateProductCommand, Response>, CreateProductHandler>();
             services.AddScoped<IRequestHandler<UpdateProductCommand, Response>, UpdateProductHandler>();
             services.AddScoped<IRequestHandler<DeleteProductCommand, Response>, DeleteProductHandler>();
+
+            services.AddScoped<IRequestHandler<CreateOrderCommand, Response>, CreateOrderHandler>();
 
             services.AddScoped<IRequestHandler<LoginCommand, Response>, LoginHandler>();
 

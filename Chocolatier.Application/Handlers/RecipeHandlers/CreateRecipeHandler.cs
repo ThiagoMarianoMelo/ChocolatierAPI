@@ -31,7 +31,7 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
 
-                var ingredientTypeVerifiyResponse = await VerifyIngredientTypes(request.RecipeItems!.Select(rt => rt.IngredientTypeId), cancellationToken);
+                var ingredientTypeVerifiyResponse = await VerifyIngredientTypes(request.RecipeItens!.Select(rt => rt.IngredientTypeId), cancellationToken);
 
                 if (!ingredientTypeVerifiyResponse.Success)
                     return ingredientTypeVerifiyResponse;
@@ -39,14 +39,14 @@ namespace Chocolatier.Application.Handlers.RecipeHandlers
                 var recipe = Mapper.Map<Recipe>(request);
 
                 recipe.IsActive = true;
-                recipe.QuantityOfIngredients = request.RecipeItems?.Count ?? 0;
+                recipe.QuantityOfIngredients = request.RecipeItens?.Count ?? 0;
 
                 var recipeResult = await RecipeRepository.Create(recipe, cancellationToken);
 
                 if (recipeResult is null)
                     return new Response(true, ["Erro ao cadastrar receita."], HttpStatusCode.InternalServerError);
 
-                var recipeItens = Mapper.Map<List<RecipeItem>>(request.RecipeItems);
+                var recipeItens = Mapper.Map<List<RecipeItem>>(request.RecipeItens);
 
                 recipeItens.ForEach(ri => ri.RecipeId = recipeResult.Id);
 
