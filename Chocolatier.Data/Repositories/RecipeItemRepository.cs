@@ -22,6 +22,7 @@ namespace Chocolatier.Data.Repositories
                         IngredientTypeId = ri.IngredientTypeId,
                         IngredientType = new IngredientType()
                         {
+                            Id = ri.IngredientType!.Id,
                             Name = ri.IngredientType!.Name,
                             MeasurementeUnit = ri.IngredientType.MeasurementeUnit
                         }

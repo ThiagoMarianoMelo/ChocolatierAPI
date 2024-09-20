@@ -20,6 +20,7 @@ namespace Chocolatier.API.Profiles
 
             CreateMap<RecipeItem, RecipeItensDataResponse>()
                .ForMember(dest => dest.IngredientTypeName, opt => opt.MapFrom(src => src.IngredientType!.Name))
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.IngredientType!.Id))
                .ForMember(dest => dest.MeasurementeUnit, opt => opt.MapFrom(src => src.IngredientType!.MeasurementeUnit));
 
             CreateMap<Product, ProductListDataResponse>()
