@@ -24,7 +24,7 @@ namespace Chocolatier.Application.Queries
                 if (request.CurrentPage <= 0)
                     return new Response(false, "A página não pode ser anterior a pagina inicial 0.", HttpStatusCode.BadRequest);
 
-                var queryableData = IngredientRepository.GetQueryableIngredientByFilter(request.InitialExpiratonDate, request.FinalExpiratonDate, request.IngredientTypeId);
+                var queryableData = IngredientRepository.GetQueryableIngredientByFilter(request.InitialExpirationDate, request.FinalExpirationDate, request.IngredientTypeId);
 
                 var result = await BaseGetPaginantionDataByQueryable(queryableData, request, cancellationToken);
 

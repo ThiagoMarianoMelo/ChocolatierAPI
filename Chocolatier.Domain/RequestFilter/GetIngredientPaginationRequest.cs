@@ -2,8 +2,8 @@
 {
     public class GetIngredientPaginationRequest : BaseRequestFilter
     {
-        public DateTime InitialExpiratonDate { get; set; }
-        public DateTime FinalExpiratonDate { get; set; }
+        public DateTime InitialExpirationDate { get; set; }
+        public DateTime FinalExpirationDate { get; set; }
         public Guid IngredientTypeId { get; set; }
 
     }
