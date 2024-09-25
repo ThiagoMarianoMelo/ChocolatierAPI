@@ -46,6 +46,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 order.RequestedById = AuthEstablishment.Id;
                 order.CurrentStatus = OrderStatus.Pending;
                 order.DeadLine = request.DeadLine.ToUniversalTime();
+                order.CreatedAt = DateTime.UtcNow;
 
                 var orderResult = await OrderRepository.Create(order, cancellationToken);
 

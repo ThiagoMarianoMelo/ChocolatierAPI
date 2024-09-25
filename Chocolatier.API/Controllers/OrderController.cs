@@ -1,5 +1,7 @@
 using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.Order;
+using Chocolatier.Domain.Interfaces.Queries;
+using Chocolatier.Domain.RequestFilter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +11,10 @@ namespace Chocolatier.API.Controllers
     [Route("[controller]")]
     public class OrderController : BaseController
     {
-        public OrderController(IMediator mediator) : base(mediator)
+        private readonly IOrderQueries OrderQueries;
+        public OrderController(IMediator mediator, IOrderQueries orderQueries) : base(mediator)
         {
+            OrderQueries = orderQueries;
         }
 
         [HttpPost]
@@ -18,6 +22,14 @@ namespace Chocolatier.API.Controllers
         public async Task<IActionResult> Post([FromBody] CreateOrderCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [FactoryOrStoreAuthorization]
+        [Route("List")]
+        public async Task<IActionResult> Get([FromQuery] GetOrdersPaginationRequest request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await OrderQueries.GetOrdersPagination(request, cancellationToken));
         }
     }
 }

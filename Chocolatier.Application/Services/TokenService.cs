@@ -51,6 +51,7 @@ namespace Chocolatier.Application.Services
         private static ClaimsIdentity GenerateClaimsIdentity(Establishment establishment) => new(claims: [
                 new ("EstablishmentId",establishment.Id.ToString() ?? ""),
                 new ("Email",establishment.Email ?? ""),
+                new ("establishmentType", establishment.EstablishmentType.ToString())
             ]);
 
         private static string GenerateJwtToken(SecurityTokenDescriptor tokenDescriptor)
