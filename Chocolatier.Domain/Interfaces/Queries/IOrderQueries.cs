@@ -7,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces.Queries
     {
         Task<Response> GetOrdersPagination(GetOrdersPaginationRequest request, CancellationToken cancellationToken);
         Task<Response> GetOrderItens(Guid orderId, CancellationToken cancellationToken);
+        Task<Response> GetOrderHistory(Guid orderId, CancellationToken cancellationToken);
     }
 }

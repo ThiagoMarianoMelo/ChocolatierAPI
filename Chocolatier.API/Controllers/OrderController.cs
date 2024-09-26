@@ -44,7 +44,7 @@ namespace Chocolatier.API.Controllers
         [HttpPatch]
         [FactoryOrStoreAuthorization]
         [Route("ChangeStatus/{Id}")]
-        public async Task<IActionResult> GetItens([FromRoute] Guid Id, [FromBody] ChangeOrderStatusCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeStatus([FromRoute] Guid Id, [FromBody] ChangeOrderStatusCommand request, CancellationToken cancellationToken)
         {
             request.Id = Id;
             return GetActionResult(await Mediator.Send(request, cancellationToken));
@@ -53,10 +53,18 @@ namespace Chocolatier.API.Controllers
         [HttpDelete]
         [FactoryOrStoreAuthorization]
         [Route("{Id}")]
-        public async Task<IActionResult> GetItens([FromRoute] Guid Id, [FromBody] CancelOrderCommand request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Cancel([FromRoute] Guid Id, [FromBody] CancelOrderCommand request, CancellationToken cancellationToken)
         {
             request.Id = Id;
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [FactoryOrStoreAuthorization]
+        [Route("History/{Id}")]
+        public async Task<IActionResult> GetHistory([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await OrderQueries.GetOrderHistory(Id, cancellationToken));
         }
     }
 }

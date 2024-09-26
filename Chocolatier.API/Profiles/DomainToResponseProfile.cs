@@ -30,9 +30,11 @@ namespace Chocolatier.API.Profiles
                 .ForMember(dest => dest.DeadLine, opt => opt.MapFrom(src => src.DeadLine.ToLocalTime()))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToLocalTime()));
 
-
             CreateMap<OrderItem, OrderItensDataResponse>()
                .ForMember(dest => dest.RecipeName, opt => opt.MapFrom(src => src.Recipe!.Name));
+
+            CreateMap<OrderHistory, OrderHistoryDataResponse>()
+              .ForMember(dest => dest.ChangedAt, opt => opt.MapFrom(src => src.ChangedAt.ToLocalTime()));
         }
     }
 }

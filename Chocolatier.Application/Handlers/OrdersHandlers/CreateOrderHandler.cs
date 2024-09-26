@@ -18,14 +18,16 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
         private readonly IAuthEstablishment AuthEstablishment;
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderItemRepository OrderItemRepository;
+        private readonly IOrderHistoryRepository OrderHistoryRepository;
 
-        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
+        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IOrderHistoryRepository orderHistoryRepository)
         {
             RecipeRepository = recipeRepository;
             Mapper = mapper;
             AuthEstablishment = authEstablishment;
             OrderRepository = orderRepository;
             OrderItemRepository = orderItemRepository;
+            OrderHistoryRepository = orderHistoryRepository;
         }
 
         public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -58,6 +60,14 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 orderItens.ForEach(orItem => orItem.OrderId = orderResult.Id);
 
                 orderItens.ForEach(async orItem => await OrderItemRepository.Create(orItem, cancellationToken));
+
+                await OrderHistoryRepository.Create(new OrderHistory
+                {
+                    OrderId = orderResult.Id,
+                    NewStatus = OrderStatus.Pending,
+                    ChangedAt = DateTime.UtcNow
+
+                }, cancellationToken);
 
                 var result = await RecipeRepository.SaveChanges(cancellationToken);
 
