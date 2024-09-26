@@ -1,4 +1,6 @@
-﻿namespace Chocolatier.Domain.RequestFilter
+﻿using Chocolatier.Domain.Enum;
+
+namespace Chocolatier.Domain.RequestFilter
 {
     public class GetOrdersPaginationRequest : BaseRequestFilter
     {
@@ -6,6 +8,6 @@
         public DateTime FinalDeadLineDate { get; set; }
         public DateTime InitialCreatedAtDate { get; set; }
         public DateTime FinalCreatedAtDate { get; set; }
-
+        public OrderStatus? OrderStatus { get; set; }
     }
 }
