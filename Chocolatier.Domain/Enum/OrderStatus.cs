@@ -9,9 +9,11 @@ namespace Chocolatier.Domain.Enum
         [StringValue("Confirmado")]
         Confirmed = 1,
         [StringValue("Em Preparo")]
-        OnPrepare = 3,
+        OnPrepare = 2,
         [StringValue("Em Rota de Entrega")]
-        OnDelivery = 4,
+        OnDelivery = 3,
+        [StringValue("Finalizado")]
+        Done = 4,
         [StringValue("Cancelado")]
         Canceled = 5,
     }

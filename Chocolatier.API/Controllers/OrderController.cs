@@ -32,12 +32,22 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await OrderQueries.GetOrdersPagination(request, cancellationToken));
         }
+
         [HttpGet]
         [FactoryOrStoreAuthorization]
         [Route("Itens")]
         public async Task<IActionResult> GetItens([FromQuery] Guid Id, CancellationToken cancellationToken)
         {
             return GetActionResult(await OrderQueries.GetOrderItens(Id, cancellationToken));
+        }
+
+        [HttpPatch]
+        [FactoryOrStoreAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetItens([FromRoute] Guid Id, [FromBody] ChangeOrderStatusCommand request, CancellationToken cancellationToken)
+        {
+            request.Id = Id;
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
 }
