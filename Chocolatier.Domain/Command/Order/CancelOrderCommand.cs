@@ -1,22 +1,22 @@
-﻿using Chocolatier.Domain.Enum;
-using Flunt.Notifications;
+﻿using Flunt.Notifications;
 using Flunt.Validations;
 using System.Text.Json.Serialization;
 
 namespace Chocolatier.Domain.Command.Order
 {
-    public class ChangeOrderStatusCommand : BaseComamnd
+    public class CancelOrderCommand : BaseComamnd
     {
         [JsonIgnore]
         public Guid Id { get; set; }
-        public OrderStatus NewStatus { get; set; }
+        public string CancelReason { get; set; } = string.Empty;
         public void Validate()
         {
             AddNotifications(
             new Contract<Notification>()
             .Requires()
                 .IsFalse(Id == Guid.Empty, "OrderId", "Problema interno para identificação do pedido, tente novamente.")
-                .IsFalse(NewStatus == OrderStatus.Canceled, "NewStatus", "Para cancelar um pedido siga o fluxo de cancelamento e informe um motivo."));
+                .IsFalse(string.IsNullOrWhiteSpace(CancelReason), "CancelReason", "O motivo do cancelamento é obrigatório."));
         }
+
     }
 }
