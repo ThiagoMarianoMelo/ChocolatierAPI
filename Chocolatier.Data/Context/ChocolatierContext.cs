@@ -44,8 +44,12 @@ namespace Chocolatier.Data.Context
 
             modelBuilder.Entity<OrderItem>().HasKey(oi => oi.Id);
             modelBuilder.Entity<OrderItem>().Property(oi => oi.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<OrderItem>().HasOne(oi => oi.Recipe).WithMany().HasForeignKey(i => i.RecipeId);
-            modelBuilder.Entity<OrderItem>().HasOne(i => i.Order).WithMany().HasForeignKey(i => i.OrderId);
+            modelBuilder.Entity<OrderItem>().HasOne(oi => oi.Recipe).WithMany().HasForeignKey(oi => oi.RecipeId);
+            modelBuilder.Entity<OrderItem>().HasOne(oi => oi.Order).WithMany().HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<OrderHistory>().HasKey(oh => oh.Id);
+            modelBuilder.Entity<OrderHistory>().Property(oh => oh.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<OrderHistory>().HasOne(oh => oh.Order).WithMany().HasForeignKey(oh => oh.OrderId);
 
             base.OnModelCreating(modelBuilder);
         }
