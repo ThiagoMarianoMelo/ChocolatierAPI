@@ -15,6 +15,7 @@ internal class Program
         builder.Services.ConfigureServices();
         builder.Services.ConfigureRepositories();
         builder.Services.ConfigureQueries();
+        builder.Services.ConfigureQueues(builder.Configuration);
 
         builder.Services.AddHttpContextAccessor();
 

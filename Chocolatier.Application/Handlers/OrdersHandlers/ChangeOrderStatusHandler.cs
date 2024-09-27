@@ -2,6 +2,7 @@
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
 using Chocolatier.Domain.Interfaces.Repositories;
+using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
@@ -12,11 +13,13 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
     {
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
+        private readonly IEmailQueueSender EmailQueueSender;
 
-        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository)
+        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender)
         {
             OrderRepository = orderRepository;
             OrderHistoryRepository = orderHistoryRepository;
+            EmailQueueSender = emailQueueSender;
         }
 
         public async Task<Response> Handle(ChangeOrderStatusCommand request, CancellationToken cancellationToken)
@@ -53,6 +56,8 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 return new Response(true, ["Erro ao alterar pedido."], HttpStatusCode.InternalServerError);
 
             await OrderRepository.SaveChanges(cancellationToken);
+
+            EmailQueueSender.SendEmailMessageQueue("Pedido Alterado Teste");
 
             return new Response(true, HttpStatusCode.Created);
         }

@@ -2,6 +2,7 @@
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
 using Chocolatier.Domain.Interfaces.Repositories;
+using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
@@ -12,11 +13,13 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
     {
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
+        private readonly IEmailQueueSender EmailQueueSender;
 
-        public CancelOrderHandler(IOrderHistoryRepository orderHistoryRepository, IOrderRepository orderRepository)
+        public CancelOrderHandler(IOrderHistoryRepository orderHistoryRepository, IOrderRepository orderRepository, IEmailQueueSender emailQueueSender)
         {
             OrderHistoryRepository = orderHistoryRepository;
             OrderRepository = orderRepository;
+            EmailQueueSender = emailQueueSender;
         }
 
         public async Task<Response> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
@@ -52,6 +55,8 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 return new Response(true, ["Erro ao cancelar pedido."], HttpStatusCode.InternalServerError);
 
             await OrderRepository.SaveChanges(cancellationToken);
+
+            EmailQueueSender.SendEmailMessageQueue("Pedido Cancelado Teste");
 
             return new Response(true, HttpStatusCode.Created);
         }
