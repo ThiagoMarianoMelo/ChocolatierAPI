@@ -61,19 +61,16 @@ namespace Chocolatier.Domain.Resource {
         }
 
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;html dir=&quot;ltr&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot;&gt;
-        ///  &lt;head&gt;
-        ///    &lt;meta charset=&quot;UTF-8&quot;&gt;
-        ///    &lt;meta content=&quot;width=device-width, initial-scale=1&quot; name=&quot;viewport&quot;&gt;
-        ///    &lt;meta name=&quot;x-apple-disable-message-reformatting&quot;&gt;
-        ///    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-        ///    &lt;meta content=&quot;telephone=no&quot; name=&quot;format-detection&quot;&gt;
-        ///    &lt;title&gt;&lt;/title&gt;
-        ///    &lt;!--[if (mso 16)]&gt;
-        ///    &lt;style type=&quot;text/css&quot;&gt;
-        ///    a {text-decoration: none;}
-        ///    &lt;/style&gt;
-        ///  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html xmlns:v=&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot; lang=&quot;en&quot;&gt;
+        ///
+        ///&lt;head&gt;
+        /// &lt;title&gt;&lt;/title&gt;
+        /// &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        /// &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;!--[if mso]&gt;&lt;xml&gt;&lt;o:OfficeDocumentSettings&gt;&lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch&gt;&lt;o:AllowPNG/&gt;&lt;/o:OfficeDocumentSettings&gt;&lt;/xml&gt;&lt;![endif]--&gt;&lt;!--[if !mso]&gt;&lt;!--&gt;&lt;!--&lt;![endif]--&gt;
+        /// &lt;style&gt;
+        ///  * {
+        ///   box-sizing: border-box [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string OrderCreated {
             get {
