@@ -8,7 +8,6 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-
         builder.Services.ConfigureDataBase(builder.Configuration);
 
         builder.Services.ConfigureMediator();
@@ -66,6 +65,8 @@ internal class Program
         app.MapControllers();
 
         app.SyncMigrations();
+
+        QueuesConfiguration.StartQueuesConsumer(app.Services.GetRequiredService<IServiceScopeFactory>());
 
         app.Run();
     }

@@ -9,8 +9,8 @@ namespace Chocolatier.API.Configurations
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ITokenService, TokenService>();
-
             services.AddScoped<IAuthEstablishment, AuthEstablishment>();
+            services.AddScoped<IEmailService, EmailService>();
         }
     }
 }
