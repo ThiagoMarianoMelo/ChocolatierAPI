@@ -1,6 +1,8 @@
 ﻿using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
+using Chocolatier.Domain.Events;
+using Chocolatier.Domain.Interfaces;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
@@ -14,12 +16,16 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
         private readonly IEmailQueueSender EmailQueueSender;
+        private readonly IEstablishmentRepository EstablishmentRepository;
+        private readonly IAuthEstablishment AuthEstablishment;
 
-        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender)
+        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository, IAuthEstablishment authEstablishment)
         {
             OrderRepository = orderRepository;
             OrderHistoryRepository = orderHistoryRepository;
             EmailQueueSender = emailQueueSender;
+            EstablishmentRepository = establishmentRepository;
+            AuthEstablishment = authEstablishment;
         }
 
         public async Task<Response> Handle(ChangeOrderStatusCommand request, CancellationToken cancellationToken)
@@ -57,7 +63,16 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             await OrderRepository.SaveChanges(cancellationToken);
 
-            EmailQueueSender.SendEmailMessageQueue("Pedido Alterado Teste");
+
+            var emailsToSendNotify = await EstablishmentRepository.GetFactoryEmails(cancellationToken);
+
+            emailsToSendNotify.Add(AuthEstablishment.Email);
+
+            EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
+            {
+                Emails = emailsToSendNotify!,
+                EmailTemplate = EmailTemplate.OrderUpdated
+            });
 
             return new Response(true, HttpStatusCode.Created);
         }

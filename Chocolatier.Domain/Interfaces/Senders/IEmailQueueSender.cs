@@ -1,7 +1,9 @@
-﻿namespace Chocolatier.Domain.Interfaces.Senders
+﻿using Chocolatier.Domain.Events;
+
+namespace Chocolatier.Domain.Interfaces.Senders
 {
     public interface IEmailQueueSender
     {
-        public void SendEmailMessageQueue(string email);
+        public void SendEmailMessageQueue(SendEmailEvent data);
     }
 }

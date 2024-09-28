@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="OrderCreated" xml:space="preserve">
+    <value>&lt;html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta content="width=device-width, initial-scale=1" name="viewport"&gt;
+    &lt;meta name="x-apple-disable-message-reformatting"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta content="telephone=no" name="format-detection"&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;!--[if (mso 16)]&gt;
+    &lt;style type="text/css"&gt;
+    a {text-decoration: none;}
+    &lt;/style&gt;
+    &lt;![endif]--&gt;
+    &lt;!--[if gte mso 9]&gt;&lt;style&gt;sup { font-size: 100% !important; }&lt;/style&gt;&lt;![endif]--&gt;
+    &lt;!--[if gte mso 9]&gt;
+&lt;noscript&gt;
+         &lt;xml&gt;
+           &lt;o:OfficeDocumentSettings&gt;
+           &lt;o:AllowPNG&gt;&lt;/o:AllowPNG&gt;
+           &lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch&gt;
+           &lt;/o:OfficeDocumentSettings&gt;
+         &lt;/xml&gt;
+      &lt;/noscript&gt;
+&lt;![endif]--&gt;
+    &lt;!--[if !mso]&gt;&lt;!----&gt;
+    &lt;link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i" rel="stylesheet"&gt;
+    &lt;!--&lt;![endif]--&gt;
+    &lt;!--[if mso]&gt;
+ &lt;style type="text/css"&gt;
+   ul {
+  margin: 0 !important;
+}
+ol {
+  margin: 0 !important;
+}
+li {
+  margin-left: 47px !important;
+}
+
+ &lt;/style&gt;&lt;![endif]
+--&gt;
+  &lt;/head&gt;
+  &lt;body class="body"&gt;
+    &lt;div dir="ltr" class="es-wrapper-color"&gt;
+      &lt;!--[if gte mso 9]&gt;
+   &lt;v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"&gt;
+    &lt;v:fill type="tile" color="#F9F9F9"&gt;&lt;/v:fill&gt;
+   &lt;/v:background&gt;
+  &lt;![endif]--&gt;
+      &lt;table width="100%" cellspacing="0" cellpadding="0" class="es-wrapper"&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td valign="top" class="esd-email-paddings"&gt;
+              &lt;table cellspacing="0" cellpadding="0" align="center" class="es-header esd-header-popover"&gt;
+                &lt;tbody&gt;
+                  &lt;tr&gt;
+                    &lt;td align="center" class="esd-stripe"&gt;
+                      &lt;table width="600" cellspacing="0" cellpadding="0" align="center" class="es-header-body" style="background-color:transparent"&gt;
+                        &lt;tbody&gt;
+                          &lt;tr&gt;
+                            &lt;td align="left" background="https://eoxmtds.stripocdn.email/content/guids/CABINET_915787324468f93bb4c0e3dd8b6275c6/images/group_151_2.png" esd-img-prev-position="center center" class="esd-structure es-p40t es-p20b es-p10r es-p10l" style="background-image:url(https://eoxmtds.stripocdn.email/content/guids/CABINET_915787324468f93bb4c0e3dd8b6275c6/images/group_151_2.png);background-repeat:no-repeat;background-position:center center"&gt;
+                              &lt;table cellpadding="0" cellspacing="0" width="100%"&gt;
+                                &lt;tbody&gt;
+                                  &lt;tr&gt;
+                                    &lt;td width="580" align="center" valign="top" class="esd-container-frame"&gt;
+                                      &lt;table cellpadding="0" cellspacing="0" width="100%"&gt;
+                                        &lt;tbody&gt;
+                                          &lt;tr&gt;
+                                            &lt;td align="center" class="esd-block-image" style="font-size:0px"&gt;
+                                              &lt;a target="_blank" href="https://chocolatier-app-front.vercel.app/dashboard"&gt;
+                                                &lt;img src="https://eoxmtds.stripocdn.email/content/guids/f6e7752e-96c5-4727-9d98-a37bb701ee1e/images/download.jpg" alt="" width="180" style="display:block"&gt;
+                                              &lt;/a&gt;
+                                            &lt;/td&gt;
+                                          &lt;/tr&gt;
+                                        &lt;/tbody&gt;
+                                      &lt;/table&gt;
+                                    &lt;/td&gt;
+                                  &lt;/tr&gt;
+                                &lt;/tbody&gt;
+                              &lt;/table&gt;
+                            &lt;/td&gt;
+                          &lt;/tr&gt;
+                        &lt;/tbody&gt;
+                      &lt;/table&gt;
+                    &lt;/td&gt;
+                  &lt;/tr&gt;
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+              &lt;table cellspacing="0" cellpadding="0" align="center" class="es-content esd-footer-popover"&gt;
+                &lt;tbody&gt;
+                  &lt;tr&gt;
+                    &lt;td align="center" class="esd-stripe"&gt;
+                      &lt;table width="600" cellspacing="0" cellpadding="0" align="center" class="es-content-body"&gt;
+                        &lt;tbody&gt;
+                          &lt;tr&gt;
+                            &lt;td align="left" class="esd-structure es-p40t es-p40b es-p10r es-p10l"&gt;
+                              &lt;table cellpadding="0" cellspacing="0" width="100%"&gt;
+                                &lt;tbody&gt;
+                                  &lt;tr&gt;
+                                    &lt;td width="580" align="center" class="esd-container-frame"&gt;
+                                      &lt;table cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff" style="border-left:1px solid #e1effc;border-right:1px solid #e1effc;border-top:1px solid #e1effc;border-bottom:1px solid #e1effc;background-color:#ffffff;border-radius:12px;border-collapse:separate;box-shadow:0 20px 20px #cccccc"&gt;
+                                        &lt;tbody&gt;
+                                          &lt;tr&gt;
+                                            &lt;td align="left" class="esd-block-text es-p30t es-p30r es-p30l"&gt;
+                                              &lt;h2 class="es-m-txt-l"&gt;
+                                                &lt;br&gt;
+                                              &lt;/h2&gt;
+                                            &lt;/td&gt;
+                                          &lt;/tr&gt;
+                                          &lt;tr&gt;
+                                            &lt;td align="left" class="esd-block-text es-p15t es-p30r es-p30l"&gt;
+                                              &lt;p style="color:#231f20"&gt;
+                                                Um novo pedido foi cadastrado e já está disponível na plataforma.&lt;br&gt;&lt;br&gt;O pedido tem limite de prazo para {0}&lt;br&gt;&lt;br&gt;Fique de olho nas notificações para saber dos novos status do pedido.
+                                              &lt;/p&gt;
+                                            &lt;/td&gt;
+                                          &lt;/tr&gt;
+                                          &lt;tr&gt;
+                                            &lt;td align="left" class="esd-block-button es-p25t es-p30b es-p30r es-p30l"&gt;
+                                              &lt;!--[if mso]&gt;&lt;a href="https://chocolatier-app-front.vercel.app/dashboard/orders" target="_blank" hidden&gt;
+ &lt;v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://chocolatier-app-front.vercel.app/dashboard/orders" 
+                style="height:39px; v-text-anchor:middle; width:227px" arcsize="31%" stroke="f"  fillcolor="#8c171f"&gt;
+  &lt;w:anchorlock&gt;&lt;/w:anchorlock&gt;
+  &lt;center style='color:#ffffff; font-family:roboto, "helvetica neue", helvetica, arial, sans-serif; font-size:14px; font-weight:400; line-height:14px;  mso-text-raise:1px'&gt;Acessar Seus Pedidos&lt;/center&gt;
+ &lt;/v:roundrect&gt;&lt;/a&gt;
+&lt;![endif]--&gt;
+                                              &lt;!--[if !mso]&gt;&lt;!----&gt;
+                                              &lt;span class="es-button-border" style="border-width:0px;border-color:#8dc696;background:#8c171f"&gt;
+                                                &lt;a href="https://chocolatier-app-front.vercel.app/dashboard/orders" target="_blank" class="es-button" style="background:#8c171f;color:#ffffff;mso-border-alt:10px solid #8c171f"&gt;
+                                                  Acessar Seus Pedidos
+                                                &lt;/a&gt;
+                                              &lt;/span&gt;
+                                              &lt;!--&lt;![endif]--&gt;
+                                            &lt;/td&gt;
+                                          &lt;/tr&gt;
+                                        &lt;/tbody&gt;
+                                      &lt;/table&gt;
+                                    &lt;/td&gt;
+                                  &lt;/tr&gt;
+                                &lt;/tbody&gt;
+                              &lt;/table&gt;
+                            &lt;/td&gt;
+                          &lt;/tr&gt;
+                          &lt;tr&gt;
+                            &lt;td align="left" class="esd-structure es-p20t es-p20b es-p10r es-p10l"&gt;
+                              &lt;table cellpadding="0" cellspacing="0" width="100%"&gt;
+                                &lt;tbody&gt;
+                                  &lt;tr&gt;
+                                    &lt;td width="580" align="center" valign="top" class="esd-container-frame"&gt;
+                                      &lt;table cellpadding="0" cellspacing="0" width="100%"&gt;
+                                        &lt;tbody&gt;
+                                          &lt;tr&gt;
+                                            &lt;td align="center" class="esd-block-button"&gt;
+                                              &lt;!--[if mso]&gt;&lt;a href="https://chocolatier-app-front.vercel.app/dashboard" target="_blank" hidden&gt;
+ &lt;v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://chocolatier-app-front.vercel.app/dashboard" 
+                style="height:41px; v-text-anchor:middle; width:272px" arcsize="29%" stroke="f"  fillcolor="#8c171f"&gt;
+  &lt;w:anchorlock&gt;&lt;/w:anchorlock&gt;
+  &lt;center style='color:#ffffff; font-family:roboto, "helvetica neue", helvetica, arial, sans-serif; font-size:15px; font-weight:400; line-height:15px;  mso-text-raise:1px'&gt;Acessar a Plataforma&lt;/center&gt;
+ &lt;/v:roundrect&gt;&lt;/a&gt;
+&lt;![endif]--&gt;
+                                              &lt;!--[if !mso]&gt;&lt;!----&gt;
+                                              &lt;span class="es-button-border" style="border-width:0px;border-color:#27ae60;background:#8c171f"&gt;
+                                                &lt;a href="https://chocolatier-app-front.vercel.app/dashboard" target="_blank" class="es-button es-button-1626347551565" style="font-weight:normal;font-size:18px;padding:10px 40px;background:#8c171f;color:#ffffff;mso-border-alt:10px solid #8c171f"&gt;
+                                                  Acessar a Plataforma
+                                                &lt;/a&gt;
+                                              &lt;/span&gt;
+                                              &lt;!--&lt;![endif]--&gt;
+                                            &lt;/td&gt;
+                                          &lt;/tr&gt;
+                                        &lt;/tbody&gt;
+                                      &lt;/table&gt;
+                                    &lt;/td&gt;
+                                  &lt;/tr&gt;
+                                &lt;/tbody&gt;
+                              &lt;/table&gt;
+                            &lt;/td&gt;
+                          &lt;/tr&gt;
+                        &lt;/tbody&gt;
+                      &lt;/table&gt;
+                    &lt;/td&gt;
+                  &lt;/tr&gt;
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</value>
+  </data>
+</root>

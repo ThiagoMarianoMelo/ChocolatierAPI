@@ -1,4 +1,5 @@
 ﻿using Chocolatier.Domain.ConfigObjects.Queues;
+using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces.Senders;
 using Microsoft.Extensions.Options;
 
@@ -10,9 +11,9 @@ namespace Chocolatier.Application.Senders
         {
         }
 
-        public void SendEmailMessageQueue(string EmailMessage)
+        public void SendEmailMessageQueue(SendEmailEvent data)
         {
-            SendMessage(EmailMessage);
+            SendMessage(data);
         }
     }
 }

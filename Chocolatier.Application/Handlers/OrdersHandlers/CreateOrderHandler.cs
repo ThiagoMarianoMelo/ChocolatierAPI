@@ -2,6 +2,7 @@
 using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
+using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Interfaces.Senders;
@@ -20,9 +21,10 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderItemRepository OrderItemRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
+        private readonly IEstablishmentRepository EstablishmentRepository;
         private readonly IEmailQueueSender EmailQueueSender;
 
-        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender)
+        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository)
         {
             RecipeRepository = recipeRepository;
             Mapper = mapper;
@@ -31,6 +33,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
             OrderItemRepository = orderItemRepository;
             OrderHistoryRepository = orderHistoryRepository;
             EmailQueueSender = emailQueueSender;
+            EstablishmentRepository = establishmentRepository;
         }
 
         public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -77,7 +80,15 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 if (result <= 0)
                     return new Response(true, ["Erro ao cadastrar pedido, entre em contato com o suporte."], HttpStatusCode.InternalServerError);
 
-                EmailQueueSender.SendEmailMessageQueue("Pedido Criado Teste");
+                var emailsToSendNotify = await EstablishmentRepository.GetFactoryEmails(cancellationToken);
+
+                emailsToSendNotify.Add(AuthEstablishment.Email);
+
+                EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
+                {
+                    Emails = emailsToSendNotify!,
+                    EmailTemplate = EmailTemplate.OrderCreated
+                });
 
                 return new Response(true, orderResult.Id, HttpStatusCode.Created);
             }

@@ -18,4 +18,19 @@
     <ProjectReference Include="..\Chocolatier.Util\Chocolatier.Util.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resource\EmailTemplateResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmailTemplateResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource\EmailTemplateResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailTemplateResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
