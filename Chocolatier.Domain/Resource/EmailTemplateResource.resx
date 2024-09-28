@@ -255,7 +255,7 @@
               &lt;tr&gt;
                &lt;td class="pad"&gt;
                 &lt;div style="color:#393d47;font-family:Tahoma,Verdana,Segoe,sans-serif;font-size:14px;line-height:150%;text-align:center;mso-line-height-alt:21px;"&gt;
-                 &lt;p style="margin: 0; word-break: break-word;"&gt;Um novo pedido foi criado com prazo para {0}&lt;br&gt;Identificador do pedido: {1}&lt;/p&gt;
+                 &lt;p style="margin: 0; word-break: break-word;"&gt;Um novo pedido foi criado pela franquia [EstablishmentName] com limite de prazo para [ORDERDEADLINE]&lt;br&gt;Identificador do pedido: [ORDERID]&lt;/p&gt;
                 &lt;/div&gt;
                &lt;/td&gt;
               &lt;/tr&gt;
@@ -301,19 +301,6 @@
               &lt;tr&gt;
                &lt;td class="pad"&gt;
                 &lt;div style="font-family:Arial, Helvetica Neue, Helvetica, sans-serif;text-align:center;" align="center"&gt;&lt;div style="height:30px;"&gt;&amp;nbsp;&lt;/div&gt;&lt;/div&gt;
-               &lt;/td&gt;
-              &lt;/tr&gt;
-             &lt;/table&gt;
-             &lt;table class="social_block block-2" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"&gt;
-              &lt;tr&gt;
-               &lt;td class="pad" style="text-align:center;padding-right:0px;padding-left:0px;"&gt;
-                &lt;div class="alignment" align="center"&gt;
-                 &lt;table class="social-table" width="42px" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;"&gt;
-                  &lt;tr&gt;
-                   &lt;td style="padding:0 5px 0 5px;"&gt;&lt;a href="https://instagram.com/" target="_blank"&gt;&lt;img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/instagram@2x.png" width="32" height="auto" alt="Instagram" title="Instagram" style="display: block; height: auto; border: 0;"&gt;&lt;/a&gt;&lt;/td&gt;
-                  &lt;/tr&gt;
-                 &lt;/table&gt;
-                &lt;/div&gt;
                &lt;/td&gt;
               &lt;/tr&gt;
              &lt;/table&gt;

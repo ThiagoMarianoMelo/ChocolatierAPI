@@ -9,6 +9,7 @@ namespace Chocolatier.Application.Services
         public string Id { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public EstablishmentType EstablishmentType { get; set; }
+        public string EstablishmentName { get; set; } = string.Empty;
 
         public AuthEstablishment(IHttpContextAccessor context) => SetAuthUserData(context);
 
@@ -18,6 +19,7 @@ namespace Chocolatier.Application.Services
             Email = context.HttpContext?.User.FindFirst("Email")?.Value ?? string.Empty;
             Enum.TryParse(context.HttpContext?.User.FindFirst("EstablishmentType")?.Value ?? string.Empty, true, out EstablishmentType establishmentType);
             EstablishmentType = establishmentType;
+            EstablishmentName = context.HttpContext?.User.FindFirst("EstablishmentName")?.Value ?? string.Empty;
         }
     }
 }

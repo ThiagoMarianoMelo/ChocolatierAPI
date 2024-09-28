@@ -9,6 +9,7 @@ using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
+using System.Threading;
 
 namespace Chocolatier.Application.Handlers.OrdersHandlers
 {
@@ -84,11 +85,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
                 emailsToSendNotify.Add(AuthEstablishment.Email);
 
-                EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
-                {
-                    Emails = emailsToSendNotify!,
-                    EmailTemplate = EmailTemplate.OrderCreated
-                });
+                _ = SendEmailOrderCreated(orderResult, emailsToSendNotify!);
 
                 return new Response(true, orderResult.Id, HttpStatusCode.Created);
             }
@@ -111,6 +108,25 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
                 return new Response(false, ["Existem itens duplicados no pedido."], HttpStatusCode.BadRequest);
 
             return new Response(true);
+        }
+
+        private async Task SendEmailOrderCreated(Order order, List<string> emailsToNotify)
+        {
+            var emailParams = new Dictionary<string, string>
+            {
+                { "[ORDERID]", order.Id.ToString() },
+                { "[EstablishmentName]", AuthEstablishment.EstablishmentName },
+                { "[ORDERDEADLINE]", order.DeadLine.ToString("dd/MM/yyyy")}
+            };
+
+            EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
+            {
+                Emails = emailsToNotify,
+                EmailTemplate = EmailTemplate.OrderCreated,
+                Params = emailParams
+            });
+
+            await Task.CompletedTask;
         }
     }
 }

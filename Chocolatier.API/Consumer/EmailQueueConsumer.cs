@@ -23,14 +23,30 @@ namespace Chocolatier.API.Consumer
 
         public override void ActionAfterConsume(object? dataConsumed)
         {
+
             if (dataConsumed is SendEmailEvent data)
-                EmailService.SendEmail(data.Emails, data.EmailTemplate.GetStringValue(), GetEmailBody(data.EmailTemplate));
+            {
+                var emailBody = GetEmailBody(data.EmailTemplate);
+
+                FormatEmailBodyWithParams(ref emailBody, data.Params);
+
+                EmailService.SendEmail(data.Emails, data.EmailTemplate.GetStringValue(), emailBody);
+            }
         }
 
-        private string GetEmailBody(EmailTemplate emailTemplate) => emailTemplate switch
+        private static string GetEmailBody(EmailTemplate emailTemplate) => emailTemplate switch
         {
             EmailTemplate.OrderCreated => EmailTemplateResource.OrderCreated,
             _ => EmailTemplateResource.OrderCreated
         };
+
+        private static void FormatEmailBodyWithParams(ref string body, Dictionary<string, string> emailParams )
+        {
+
+            foreach (var emailParam in emailParams)
+            {
+                body = body.Replace(emailParam.Key, emailParam.Value);
+            }
+        }
     }
 }

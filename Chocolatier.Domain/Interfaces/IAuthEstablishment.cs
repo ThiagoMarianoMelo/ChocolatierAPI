@@ -7,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces
         public string Id { get; set; }
         public string Email { get; set; }
         public EstablishmentType EstablishmentType { get; set; }    
+        public string EstablishmentName { get; set; }
     }
 }
