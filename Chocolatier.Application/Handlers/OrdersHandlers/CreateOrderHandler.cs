@@ -2,18 +2,16 @@
 using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
-using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
 using MediatR;
 using System.Net;
-using System.Threading;
 
 namespace Chocolatier.Application.Handlers.OrdersHandlers
 {
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Response>
+    public class CreateOrderHandler : BaseOrderHandler, IRequestHandler<CreateOrderCommand, Response>
     {
 
         private readonly IRecipeRepository RecipeRepository;
@@ -23,9 +21,10 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
         private readonly IOrderItemRepository OrderItemRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
         private readonly IEstablishmentRepository EstablishmentRepository;
-        private readonly IEmailQueueSender EmailQueueSender;
 
-        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository)
+        public CreateOrderHandler(IRecipeRepository recipeRepository, IMapper mapper, IAuthEstablishment authEstablishment, 
+            IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, IOrderHistoryRepository orderHistoryRepository, 
+            IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository): base(emailQueueSender)
         {
             RecipeRepository = recipeRepository;
             Mapper = mapper;
@@ -33,7 +32,6 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
             OrderRepository = orderRepository;
             OrderItemRepository = orderItemRepository;
             OrderHistoryRepository = orderHistoryRepository;
-            EmailQueueSender = emailQueueSender;
             EstablishmentRepository = establishmentRepository;
         }
 
@@ -85,7 +83,9 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
                 emailsToSendNotify.Add(AuthEstablishment.Email);
 
-                _ = SendEmailOrderCreated(orderResult, emailsToSendNotify!);
+                var emailParams = GetEmailParamsOrderCreated(orderResult, emailsToSendNotify!);
+
+                _ = SendEmailOrder(emailsToSendNotify!, EmailTemplate.OrderCreated, emailParams);
 
                 return new Response(true, orderResult.Id, HttpStatusCode.Created);
             }
@@ -110,23 +110,12 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
             return new Response(true);
         }
 
-        private async Task SendEmailOrderCreated(Order order, List<string> emailsToNotify)
-        {
-            var emailParams = new Dictionary<string, string>
+        private Dictionary<string,string> GetEmailParamsOrderCreated(Order order, List<string> emailsToNotify) 
+            => new()
             {
                 { "[ORDERID]", order.Id.ToString() },
                 { "[EstablishmentName]", AuthEstablishment.EstablishmentName },
                 { "[ORDERDEADLINE]", order.DeadLine.ToString("dd/MM/yyyy")}
             };
-
-            EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
-            {
-                Emails = emailsToNotify,
-                EmailTemplate = EmailTemplate.OrderCreated,
-                Params = emailParams
-            });
-
-            await Task.CompletedTask;
-        }
     }
 }

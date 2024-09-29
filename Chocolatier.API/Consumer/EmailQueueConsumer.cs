@@ -37,6 +37,7 @@ namespace Chocolatier.API.Consumer
         private static string GetEmailBody(EmailTemplate emailTemplate) => emailTemplate switch
         {
             EmailTemplate.OrderCreated => EmailTemplateResource.OrderCreated,
+            EmailTemplate.OrderCanceled => EmailTemplateResource.OrderCanceled,
             _ => EmailTemplateResource.OrderCreated
         };
 

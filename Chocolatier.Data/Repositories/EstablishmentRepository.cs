@@ -31,9 +31,13 @@ namespace Chocolatier.Data.Repositories
                                .OrderBy(usr => usr.UserName);
         }
 
-        public async Task<List<string?>> GetFactoryEmails(CancellationToken cancellationToken) 
-            => await DbSet.AsNoTracking().Where(es => es.EstablishmentType == EstablishmentType.Factory).Select(es => es.Email).ToListAsync(cancellationToken);
-
+        public async Task<List<string?>> GetFactoryEmails(CancellationToken cancellationToken)
+        {
+            return await DbSet.AsNoTracking()
+                .Where(es => es.EstablishmentType == EstablishmentType.Factory)
+                .Select(es => es.Email)
+                .ToListAsync(cancellationToken);
+        }
 
         private Expression<Func<Establishment, bool>> BuildQueryEstablishmentFilter(string name, string email)
         {

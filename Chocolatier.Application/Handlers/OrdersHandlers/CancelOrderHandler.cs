@@ -1,7 +1,6 @@
 ﻿using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
-using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Interfaces.Senders;
@@ -11,19 +10,19 @@ using System.Net;
 
 namespace Chocolatier.Application.Handlers.OrdersHandlers
 {
-    public class CancelOrderHandler : IRequestHandler<CancelOrderCommand, Response>
+    public class CancelOrderHandler : BaseOrderHandler, IRequestHandler<CancelOrderCommand, Response>
     {
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
-        private readonly IEmailQueueSender EmailQueueSender;
         private readonly IEstablishmentRepository EstablishmentRepository;
         private readonly IAuthEstablishment AuthEstablishment;
 
-        public CancelOrderHandler(IOrderHistoryRepository orderHistoryRepository, IOrderRepository orderRepository, IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository, IAuthEstablishment authEstablishment)
+        public CancelOrderHandler(IOrderHistoryRepository orderHistoryRepository, IOrderRepository orderRepository,
+            IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository,
+            IAuthEstablishment authEstablishment) : base(emailQueueSender)
         {
             OrderHistoryRepository = orderHistoryRepository;
             OrderRepository = orderRepository;
-            EmailQueueSender = emailQueueSender;
             EstablishmentRepository = establishmentRepository;
             AuthEstablishment = authEstablishment;
         }
@@ -64,15 +63,20 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             var emailsToSendNotify = await EstablishmentRepository.GetFactoryEmails(cancellationToken);
 
-            emailsToSendNotify.Add(AuthEstablishment.Email);
+            emailsToSendNotify.Add(order.Establishment?.UserName);
 
-            EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
-            {
-                Emails = emailsToSendNotify!,
-                EmailTemplate = EmailTemplate.OrderCanceled
-            });
+            var emailParams = GetEmailParamsOrderCreated(request.Id, request.CancelReason, emailsToSendNotify!);
+
+            _ = SendEmailOrder(emailsToSendNotify.Distinct().ToList()!, EmailTemplate.OrderCanceled, emailParams);
 
             return new Response(true, HttpStatusCode.Created);
         }
+        private Dictionary<string, string> GetEmailParamsOrderCreated(Guid orderId, string CancelReason, List<string> emailsToNotify)
+            => new()
+            {
+                { "[ORDERID]", orderId.ToString() },
+                { "[EstablishmentName]", AuthEstablishment.EstablishmentName },
+                { "[CANCELREASON]", CancelReason}
+            };
     }
 }
