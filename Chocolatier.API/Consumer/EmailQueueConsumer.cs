@@ -4,7 +4,9 @@ using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces.Services;
 using Chocolatier.Domain.Resource;
 using Chocolatier.Util.EnumUtil;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Options;
+using System.ComponentModel;
 
 namespace Chocolatier.API.Consumer
 {
@@ -38,7 +40,8 @@ namespace Chocolatier.API.Consumer
         {
             EmailTemplate.OrderCreated => EmailTemplateResource.OrderCreated,
             EmailTemplate.OrderCanceled => EmailTemplateResource.OrderCanceled,
-            _ => EmailTemplateResource.OrderCreated
+            EmailTemplate.OrderStatusChanged => EmailTemplateResource.OrderStatusChanged,
+            _ => throw new InvalidEnumArgumentException()
         };
 
         private static void FormatEmailBodyWithParams(ref string body, Dictionary<string, string> emailParams )

@@ -83,7 +83,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
                 emailsToSendNotify.Add(AuthEstablishment.Email);
 
-                var emailParams = GetEmailParamsOrderCreated(orderResult, emailsToSendNotify!);
+                var emailParams = GetEmailParamsOrderCreated(orderResult);
 
                 _ = SendEmailOrder(emailsToSendNotify!, EmailTemplate.OrderCreated, emailParams);
 
@@ -110,7 +110,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
             return new Response(true);
         }
 
-        private Dictionary<string,string> GetEmailParamsOrderCreated(Order order, List<string> emailsToNotify) 
+        private Dictionary<string,string> GetEmailParamsOrderCreated(Order order) 
             => new()
             {
                 { "[ORDERID]", order.Id.ToString() },

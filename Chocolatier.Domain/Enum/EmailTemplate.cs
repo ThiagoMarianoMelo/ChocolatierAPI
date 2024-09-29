@@ -8,7 +8,7 @@ namespace Chocolatier.Domain.Enum
         OrderCreated = 0,
         [StringValue("Pedido Cancelado")]
         OrderCanceled = 1,
-        [StringValue("Pedido Alterado")]
-        OrderUpdated = 2
+        [StringValue("Status de um Pedido foi alterado")]
+        OrderStatusChanged = 2
     }
 }

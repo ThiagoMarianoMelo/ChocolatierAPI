@@ -1,29 +1,28 @@
 ﻿using Chocolatier.Domain.Command.Order;
 using Chocolatier.Domain.Entities;
 using Chocolatier.Domain.Enum;
-using Chocolatier.Domain.Events;
 using Chocolatier.Domain.Interfaces;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Interfaces.Senders;
 using Chocolatier.Domain.Responses;
+using Chocolatier.Util.EnumUtil;
 using MediatR;
 using System.Net;
 
 namespace Chocolatier.Application.Handlers.OrdersHandlers
 {
-    public class ChangeOrderStatusHandler : IRequestHandler<ChangeOrderStatusCommand, Response>
+    public class ChangeOrderStatusHandler : BaseOrderHandler, IRequestHandler<ChangeOrderStatusCommand, Response>
     {
         private readonly IOrderRepository OrderRepository;
         private readonly IOrderHistoryRepository OrderHistoryRepository;
-        private readonly IEmailQueueSender EmailQueueSender;
         private readonly IEstablishmentRepository EstablishmentRepository;
         private readonly IAuthEstablishment AuthEstablishment;
 
-        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository, IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository, IAuthEstablishment authEstablishment)
+        public ChangeOrderStatusHandler(IOrderRepository orderRepository, IOrderHistoryRepository orderHistoryRepository,
+            IEmailQueueSender emailQueueSender, IEstablishmentRepository establishmentRepository, IAuthEstablishment authEstablishment) : base(emailQueueSender)
         {
             OrderRepository = orderRepository;
             OrderHistoryRepository = orderHistoryRepository;
-            EmailQueueSender = emailQueueSender;
             EstablishmentRepository = establishmentRepository;
             AuthEstablishment = authEstablishment;
         }
@@ -38,6 +37,8 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             if (order is null)
                 return new Response(true, ["Erro ao encontrar pedido."], HttpStatusCode.InternalServerError);
+
+            var oldStauts = order.CurrentStatus;
 
             var statusCanBeChanged = VerifyStatusCanBeChanged(order, request.NewStatus);
 
@@ -63,30 +64,33 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             await OrderRepository.SaveChanges(cancellationToken);
 
-
             var emailsToSendNotify = await EstablishmentRepository.GetFactoryEmails(cancellationToken);
 
-            emailsToSendNotify.Add(AuthEstablishment.Email);
+            emailsToSendNotify.Add(order.Establishment?.Email);
 
-            EmailQueueSender.SendEmailMessageQueue(new SendEmailEvent
-            {
-                Emails = emailsToSendNotify!,
-                EmailTemplate = EmailTemplate.OrderUpdated
-            });
+            var emailParams = GetEmailParamsOrderCreated(order, oldStauts!);
+
+            _ = SendEmailOrder(emailsToSendNotify!, EmailTemplate.OrderCreated, emailParams);
 
             return new Response(true, HttpStatusCode.Created);
         }
 
-        private bool VerifyStatusCanBeChanged(Order order, OrderStatus newOrderStatus)
+        private static bool VerifyStatusCanBeChanged(Order order, OrderStatus newOrderStatus) => newOrderStatus switch
         {
-            return newOrderStatus switch
-            {
-                OrderStatus.Confirmed => order.CurrentStatus == OrderStatus.Pending,
-                OrderStatus.OnPrepare => order.CurrentStatus == OrderStatus.Confirmed,
-                OrderStatus.OnDelivery => order.CurrentStatus == OrderStatus.OnPrepare,
-                OrderStatus.Done => order.CurrentStatus == OrderStatus.OnDelivery,
-                _ => false
-            };
-        }
+            OrderStatus.Confirmed => order.CurrentStatus == OrderStatus.Pending,
+            OrderStatus.OnPrepare => order.CurrentStatus == OrderStatus.Confirmed,
+            OrderStatus.OnDelivery => order.CurrentStatus == OrderStatus.OnPrepare,
+            OrderStatus.Done => order.CurrentStatus == OrderStatus.OnDelivery,
+            _ => false
+        };
+
+        private Dictionary<string, string> GetEmailParamsOrderCreated(Order order, OrderStatus oldStauts)
+        => new()
+        {
+            { "[ORDERID]", order.Id.ToString() },
+            { "[EstablishmentName]", AuthEstablishment.EstablishmentName },
+            { "[STATUSANTIGO]", oldStauts.GetStringValue()},
+            { "[NOVOSTATUS]", order.CurrentStatus.GetStringValue()}
+        };
     }
 }

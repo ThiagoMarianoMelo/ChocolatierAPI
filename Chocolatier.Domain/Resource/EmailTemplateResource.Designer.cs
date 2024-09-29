@@ -59,7 +59,7 @@ namespace Chocolatier.Domain.Resource {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
         ///&lt;html xmlns:v=&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot; lang=&quot;en&quot;&gt;
@@ -93,6 +93,24 @@ namespace Chocolatier.Domain.Resource {
         public static string OrderCreated {
             get {
                 return ResourceManager.GetString("OrderCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;!DOCTYPE html&gt;
+        ///&lt;html xmlns:v=&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot; lang=&quot;en&quot;&gt;
+        ///
+        ///&lt;head&gt;
+        /// &lt;title&gt;&lt;/title&gt;
+        /// &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+        /// &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;!--[if mso]&gt;&lt;xml&gt;&lt;o:OfficeDocumentSettings&gt;&lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch&gt;&lt;o:AllowPNG/&gt;&lt;/o:OfficeDocumentSettings&gt;&lt;/xml&gt;&lt;![endif]--&gt;&lt;!--[if !mso]&gt;&lt;!--&gt;&lt;!--&lt;![endif]--&gt;
+        /// &lt;style&gt;
+        ///  * {
+        ///   box-sizing: border-box [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string OrderStatusChanged {
+            get {
+                return ResourceManager.GetString("OrderStatusChanged", resourceCulture);
             }
         }
     }

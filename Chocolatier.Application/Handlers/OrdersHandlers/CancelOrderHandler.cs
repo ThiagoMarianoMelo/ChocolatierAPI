@@ -65,13 +65,13 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             emailsToSendNotify.Add(order.Establishment?.Email);
 
-            var emailParams = GetEmailParamsOrderCreated(request.Id, request.CancelReason, emailsToSendNotify!);
+            var emailParams = GetEmailParamsOrderCreated(request.Id, request.CancelReason);
 
             _ = SendEmailOrder(emailsToSendNotify.Distinct().ToList()!, EmailTemplate.OrderCanceled, emailParams);
 
             return new Response(true, HttpStatusCode.Created);
         }
-        private Dictionary<string, string> GetEmailParamsOrderCreated(Guid orderId, string CancelReason, List<string> emailsToNotify)
+        private Dictionary<string, string> GetEmailParamsOrderCreated(Guid orderId, string CancelReason)
             => new()
             {
                 { "[ORDERID]", orderId.ToString() },
