@@ -70,7 +70,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             var emailParams = GetEmailParamsOrderCreated(order, oldStauts!);
 
-            _ = SendEmailOrder(emailsToSendNotify!, EmailTemplate.OrderCreated, emailParams);
+            _ = SendEmailOrder(emailsToSendNotify!, EmailTemplate.OrderStatusChanged, emailParams);
 
             return new Response(true, HttpStatusCode.Created);
         }
