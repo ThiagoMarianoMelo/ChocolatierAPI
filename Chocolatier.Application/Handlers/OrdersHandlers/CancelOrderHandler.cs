@@ -63,7 +63,7 @@ namespace Chocolatier.Application.Handlers.OrdersHandlers
 
             var emailsToSendNotify = await EstablishmentRepository.GetFactoryEmails(cancellationToken);
 
-            emailsToSendNotify.Add(order.Establishment?.UserName);
+            emailsToSendNotify.Add(order.Establishment?.Email);
 
             var emailParams = GetEmailParamsOrderCreated(request.Id, request.CancelReason, emailsToSendNotify!);
 
