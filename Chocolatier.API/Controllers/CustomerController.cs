@@ -1,5 +1,4 @@
 ﻿using Chocolatier.API.Authorization;
-using Chocolatier.Application.Queries;
 using Chocolatier.Domain.Command.Customer;
 using Chocolatier.Domain.Interfaces.Queries;
 using MediatR;
@@ -25,13 +24,21 @@ namespace Chocolatier.API.Controllers
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
 
-
         [HttpGet]
         [StoreAuthorization]
         [Route("List")]
         public async Task<IActionResult> GetList(CancellationToken cancellationToken)
         {
             return GetActionResult(await CustomerQueries.GetCustomersList(cancellationToken));
+        }
+
+        [HttpDelete]
+        [StoreAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid Id, CancellationToken cancellationToken)
+        {
+            var request = new DeleteCustomerCommand { Id = Id };
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
 }
