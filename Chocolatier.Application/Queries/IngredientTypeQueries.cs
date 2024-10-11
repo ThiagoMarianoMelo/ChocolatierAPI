@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Chocolatier.Domain.Entities;
-using Chocolatier.Domain.Interfaces.Queries;
+﻿using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.Interfaces.Repositories;
 using Chocolatier.Domain.Responses;
-using Chocolatier.Domain.Responses.DataResponses;
 using System.Net;
 
 namespace Chocolatier.Application.Queries

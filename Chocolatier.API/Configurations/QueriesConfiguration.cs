@@ -13,6 +13,7 @@ namespace Chocolatier.API.Configurations
             services.AddScoped<IRecipeQueries, RecipeQueries>();
             services.AddScoped<IProductQueries, ProductQueries>();
             services.AddScoped<IOrderQueries, OrderQueries>();
+            services.AddScoped<ICustomerQueries, CustomerQueries>();
         }
     }
 }

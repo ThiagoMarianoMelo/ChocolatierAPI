@@ -1,5 +1,7 @@
 ﻿using Chocolatier.API.Authorization;
+using Chocolatier.Application.Queries;
 using Chocolatier.Domain.Command.Customer;
+using Chocolatier.Domain.Interfaces.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +11,11 @@ namespace Chocolatier.API.Controllers
     [Route("[controller]")]
     public class CustomerController : BaseController
     {
-        public CustomerController(IMediator mediator) : base(mediator)
+        private readonly ICustomerQueries CustomerQueries;
+
+        public CustomerController(IMediator mediator, ICustomerQueries customerQueries) : base(mediator)
         {
+            CustomerQueries = customerQueries;
         }
 
         [HttpPost]
@@ -18,6 +23,15 @@ namespace Chocolatier.API.Controllers
         public async Task<IActionResult> Post(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+
+        [HttpGet]
+        [StoreAuthorization]
+        [Route("List")]
+        public async Task<IActionResult> GetList(CancellationToken cancellationToken)
+        {
+            return GetActionResult(await CustomerQueries.GetCustomersList(cancellationToken));
         }
     }
 }
