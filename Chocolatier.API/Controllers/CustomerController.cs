@@ -14,7 +14,7 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpPost]
-        //[StoreAuthorization]
+        [StoreAuthorization]
         public async Task<IActionResult> Post(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
