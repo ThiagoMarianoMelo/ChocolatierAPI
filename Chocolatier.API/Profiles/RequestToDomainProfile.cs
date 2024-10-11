@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Chocolatier.Domain.Command.Customer;
 using Chocolatier.Domain.Command.Establishment;
 using Chocolatier.Domain.Command.Ingredient;
 using Chocolatier.Domain.Command.IngredientType;
@@ -21,6 +22,7 @@ namespace Chocolatier.API.Profiles
             CreateMap<CreateProductCommand, Product>();
             CreateMap<CreateOrderCommand, Order>();
             CreateMap<OrderItemCommand, OrderItem>();
+            CreateMap<CreateCustomerCommand, Customer>();
         }
     }
 }
