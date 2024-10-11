@@ -1,5 +1,6 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.Customer;
+using Chocolatier.Domain.Command.Ingredient;
 using Chocolatier.Domain.Interfaces.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,15 @@ namespace Chocolatier.API.Controllers
         public async Task<IActionResult> Delete([FromRoute] Guid Id, CancellationToken cancellationToken)
         {
             var request = new DeleteCustomerCommand { Id = Id };
+            return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpPatch]
+        [StoreAuthorization]
+        [Route("{Id}")]
+        public async Task<IActionResult> Patch([FromRoute] Guid Id, [FromBody] UpdateCustomerCommand request, CancellationToken cancellationToken)
+        {
+            request.Id = Id;
             return GetActionResult(await Mediator.Send(request, cancellationToken));
         }
     }
