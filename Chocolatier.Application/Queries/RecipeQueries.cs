@@ -50,9 +50,16 @@ namespace Chocolatier.Application.Queries
 
                 var recipteItens = await RecipeItemRepository.GetItensFromRecipe(recipeId, cancellationToken);
                 
-                var resultData = new List<RecipeItensDataResponse>();
+                var itens = new List<RecipeItensDataResponse>();
 
-                recipteItens.ForEach(ri => resultData.Add(Mapper.Map<RecipeItensDataResponse>(ri)));
+                recipteItens.ForEach(ri => itens.Add(Mapper.Map<RecipeItensDataResponse>(ri)));
+                 
+                var resultData = new RecipeInfoListItensDataResponse
+                {
+                    Id = recipteItens[0]?.Recipe?.Id ?? Guid.Empty,
+                    Name = recipteItens[0]?.Recipe?.Name ?? "Receita não encontrada",
+                    Itens = itens
+                };
 
                 return new Response(true, resultData, HttpStatusCode.OK);
             }
