@@ -12,9 +12,12 @@ namespace Chocolatier.Application.Queries
     public class SalesQueries : BasePaginationQueries<Sale, SalesListDataResponse>, ISalesQueries
     {
         private readonly ISaleRepository SaleRepository;
-        public SalesQueries(IMapper mapper, ISaleRepository saleRepository) : base(mapper)
+        private readonly ISaleItemRepository SaleItemRepository;
+
+        public SalesQueries(IMapper mapper, ISaleRepository saleRepository, ISaleItemRepository saleItemRepository) : base(mapper)
         {
             SaleRepository = saleRepository;
+            SaleItemRepository = saleItemRepository;
         }
 
         public async Task<Response> GetSalesPagination(GetSalesPaginationsRequest request, CancellationToken cancellationToken)
@@ -29,6 +32,27 @@ namespace Chocolatier.Application.Queries
                 var result = await BaseGetPaginantionDataByQueryable(queryableData, request, cancellationToken);
 
                 return new Response(true, result, HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return new Response(false, "Erro interno no processamento, entre em contato com o suporte.", HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public async Task<Response> GetSaleItens(Guid saleId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (saleId == Guid.Empty)
+                    return new Response(false, "Venda informada inválida", HttpStatusCode.BadRequest);
+
+                var saleItens = await SaleItemRepository.GetItensFromSales(saleId, cancellationToken);
+
+                var resultData = new List<SaleItensDataResponse>();
+
+                saleItens.ForEach(ri => resultData.Add(Mapper.Map<SaleItensDataResponse>(ri)));
+
+                return new Response(true, resultData, HttpStatusCode.OK);
             }
             catch (Exception)
             {

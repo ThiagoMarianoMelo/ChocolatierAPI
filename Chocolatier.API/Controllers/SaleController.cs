@@ -1,4 +1,5 @@
 ﻿using Chocolatier.API.Authorization;
+using Chocolatier.Application.Queries;
 using Chocolatier.Domain.Command.Sale;
 using Chocolatier.Domain.Interfaces.Queries;
 using Chocolatier.Domain.RequestFilter;
@@ -30,6 +31,14 @@ namespace Chocolatier.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetSalesPaginationsRequest request, CancellationToken cancellationToken)
         {
             return GetActionResult(await SalesQueries.GetSalesPagination(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [StoreAuthorization]
+        [Route("Itens")]
+        public async Task<IActionResult> GetItens([FromQuery] Guid Id, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await SalesQueries.GetSaleItens(Id, cancellationToken));
         }
     }
 }

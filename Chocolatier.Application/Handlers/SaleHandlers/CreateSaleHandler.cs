@@ -59,9 +59,15 @@ namespace Chocolatier.Application.Handlers.SaleHandlers
 
                 var saleItens = Mapper.Map<List<SaleItem>>(request.SaleItens);
 
-                saleItens.ForEach(saleItem => saleItem.SaleId = saleResult.Id);
 
-                saleItens.ForEach(async saleItem => await SaleItemRepository.Create(saleItem, cancellationToken));
+                saleItens.ForEach(async saleItem => {
+
+                    saleItem.SaleId = saleResult.Id;
+
+                    saleItem.UnityPrice = ProductRepository.GetProductPriceByRecipeId(saleItem.RecipeId);
+
+                    await SaleItemRepository.Create(saleItem, cancellationToken);
+                });
 
                 var result = await SaleRepository.SaveChanges(cancellationToken);
 
