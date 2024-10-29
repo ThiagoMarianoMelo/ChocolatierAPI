@@ -28,10 +28,24 @@ namespace Chocolatier.Data.Repositories
                         Name = p.Name,
                         ExpireAt = p.ExpireAt,
                         Price = p.Price,
-                        RecipeId = p.RecipeId
+                        RecipeId = p.RecipeId,
+                        Quantity = p.Quantity
                     })
                     .OrderBy(it => it.ExpireAt);
         }
+
+        public Product DeleteProductById(Guid Id)
+        {
+            return DbSet.Remove(DbSet.Find(Id)!).Entity;
+        }
+
+        public int GetProductQuantityInStorage(Guid id)
+         => DbSet.AsNoTracking()
+            .FirstOrDefault(p => p.Id == id && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id)?.Quantity ?? 0;
+
+
+        public double GetProductPrice(Guid id)
+            => DbSet.AsNoTracking().FirstOrDefault(p => p.Id == id )?.Price ?? 0;
 
         private Expression<Func<Product, bool>> BuildQueryProductsTypeFilter(DateTime initialDate, DateTime finalDate, string productName)
         {
