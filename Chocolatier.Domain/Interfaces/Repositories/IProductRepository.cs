@@ -5,8 +5,9 @@ namespace Chocolatier.Domain.Interfaces.Repositories
     public interface IProductRepository : IBaseRepository<Product>
     {
         IQueryable<Product> GetQueryableProductsByFilter(DateTime initialDate, DateTime finalDate, string productName);
-        int GetProductQuantityInStorage(Guid id);
-        double GetProductPrice(Guid id);
+        double GetProductPriceByRecipeId(Guid recipeid);
         Product DeleteProductById(Guid Id);
+        Task<List<Product>> GetProductsOnStorageByRecipeId(Guid recipeId, CancellationToken cancellationToken);
+        int GetProductQuantityInStorageByRecipeId(Guid recipeId);
     }
 }

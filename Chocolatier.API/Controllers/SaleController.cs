@@ -1,5 +1,7 @@
 ﻿using Chocolatier.API.Authorization;
 using Chocolatier.Domain.Command.Sale;
+using Chocolatier.Domain.Interfaces.Queries;
+using Chocolatier.Domain.RequestFilter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +11,10 @@ namespace Chocolatier.API.Controllers
     [Route("[controller]")]
     public class SaleController : BaseController
     {
-        public SaleController(IMediator mediator) : base(mediator)
+        private readonly ISalesQueries SalesQueries;
+        public SaleController(IMediator mediator, ISalesQueries salesQueries) : base(mediator)
         {
+            SalesQueries = salesQueries;
         }
 
         [HttpPost]
@@ -18,6 +22,14 @@ namespace Chocolatier.API.Controllers
         public async Task<IActionResult> Post([FromBody] CreateSaleCommand request, CancellationToken cancellationToken)
         {
             return GetActionResult(await Mediator.Send(request, cancellationToken));
+        }
+
+        [HttpGet]
+        [StoreAuthorization]
+        [Route("List")]
+        public async Task<IActionResult> Get([FromQuery] GetSalesPaginationsRequest request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await SalesQueries.GetSalesPagination(request, cancellationToken));
         }
     }
 }

@@ -39,13 +39,19 @@ namespace Chocolatier.Data.Repositories
             return DbSet.Remove(DbSet.Find(Id)!).Entity;
         }
 
-        public int GetProductQuantityInStorage(Guid id)
+        public async Task<List<Product>> GetProductsOnStorageByRecipeId(Guid recipeId, CancellationToken cancellationToken)
+            => await DbSet.AsNoTracking()
+            .Where(p => p.RecipeId == recipeId && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id)
+            .OrderBy(p => p.Quantity)
+            .ToListAsync(cancellationToken);
+
+        public int GetProductQuantityInStorageByRecipeId(Guid recipeId)
          => DbSet.AsNoTracking()
-            .FirstOrDefault(p => p.Id == id && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id)?.Quantity ?? 0;
+            .Where(p => p.RecipeId == recipeId && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id).Sum(p => p.Quantity);
 
 
-        public double GetProductPrice(Guid id)
-            => DbSet.AsNoTracking().FirstOrDefault(p => p.Id == id )?.Price ?? 0;
+        public double GetProductPriceByRecipeId(Guid recipeid)
+            => DbSet.AsNoTracking().FirstOrDefault(p => p.RecipeId == recipeid && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id)?.Price ?? 0;
 
         private Expression<Func<Product, bool>> BuildQueryProductsTypeFilter(DateTime initialDate, DateTime finalDate, string productName)
         {

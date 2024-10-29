@@ -36,20 +36,20 @@ namespace Chocolatier.Application.Handlers.SaleHandlers
                 if (!request.IsValid)
                     return new Response(false, request.Notifications);
 
+                var customer = await CustomerRepository.GetEntityById(request.CustomerId, cancellationToken);
+
+                if (customer is null)
+                    return new Response(true, ["Erro ao encontrar cliente."], HttpStatusCode.InternalServerError);
+
                 var productsVerifyResponse = VerifyProductsAreAvaibles(request.SaleItens!);
 
                 if (!productsVerifyResponse.Success)
                     return productsVerifyResponse;
 
-                var customer = await CustomerRepository.GetEntityById(request.CustomerId, cancellationToken);
-
-                if ( customer is null)
-                    return new Response(true, ["Erro ao encontrar cliente."], HttpStatusCode.InternalServerError);
-
                 var sale = Mapper.Map<Sale>(request);
 
                 sale.EstablishmentId = AuthEstablishment.Id;
-                sale.TotalPrice = request.SaleItens!.Sum(si => ProductRepository.GetProductPrice(si.ProductId) * si.Quantity);
+                sale.TotalPrice = request.SaleItens!.Sum(si => ProductRepository.GetProductPriceByRecipeId(si.RecipeId) * si.Quantity);
                 sale.SaleDate = DateTime.UtcNow;
 
                 var saleResult = await SaleRepository.Create(sale, cancellationToken);
@@ -82,13 +82,13 @@ namespace Chocolatier.Application.Handlers.SaleHandlers
         {
             foreach (var item in saleItens)
             {
-                var productQuantityInStorage = ProductRepository.GetProductQuantityInStorage(item.ProductId);
+                var productQuantityInStorage = ProductRepository.GetProductQuantityInStorageByRecipeId(item.RecipeId);
 
                 if (productQuantityInStorage < item.Quantity)
                     return new Response(false, [$"Não há produtos suficientes em estoque."], HttpStatusCode.BadRequest);
             }
 
-            if (saleItens.Count() != saleItens.Distinct().Count())
+            if (saleItens.Select(Si => Si.RecipeId).Count() != saleItens.Select(Si => Si.RecipeId).Distinct().Count())
                 return new Response(false, ["Existem itens duplicados na venda."], HttpStatusCode.BadRequest);
 
             return new Response(true);
@@ -96,19 +96,33 @@ namespace Chocolatier.Application.Handlers.SaleHandlers
 
         private async Task DeleteSaledProducts(IEnumerable<SaleItemCommand> saleItens, CancellationToken cancellationToken)
         {
+
             foreach (var item in saleItens)
             {
-                var productQuantityInStorage = ProductRepository.GetProductQuantityInStorage(item.ProductId);
+                var productOnStorage = await ProductRepository.GetProductsOnStorageByRecipeId(item.RecipeId, cancellationToken);
 
-                if (productQuantityInStorage == item.Quantity)
-                    ProductRepository.DeleteProductById(item.ProductId);
+                var missingAmount = item.Quantity;
 
-                var product = await ProductRepository.GetEntityById(item.ProductId, cancellationToken);
+                foreach (var product in productOnStorage)
+                {
 
-                product!.Quantity = product.Quantity - item.Quantity;
+                    if (product.Quantity > missingAmount)
+                    {
+                        product.Quantity = product.Quantity - missingAmount;
 
-                ProductRepository.UpdateEntity(product, cancellationToken);
+                        ProductRepository.UpdateEntity(product, cancellationToken);
+                    }
+                    else
+                    {
 
+                        missingAmount = missingAmount - product.Quantity;
+
+                        ProductRepository.DeleteEntity(product, cancellationToken);
+                    }
+
+                    if (missingAmount <= 0)
+                        break;
+                }
             }
 
             await ProductRepository.SaveChanges(cancellationToken);

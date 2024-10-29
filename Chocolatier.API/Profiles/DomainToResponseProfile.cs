@@ -36,6 +36,8 @@ namespace Chocolatier.API.Profiles
 
             CreateMap<OrderHistory, OrderHistoryDataResponse>()
               .ForMember(dest => dest.ChangedAt, opt => opt.MapFrom(src => src.ChangedAt.ToLocalTime()));
+
+            CreateMap<Sale, SalesListDataResponse>();
         }
     }
 }
