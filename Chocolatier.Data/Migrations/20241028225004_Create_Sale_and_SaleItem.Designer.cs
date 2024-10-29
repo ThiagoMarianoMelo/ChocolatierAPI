@@ -3,6 +3,7 @@ using System;
 using Chocolatier.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chocolatier.Data.Migrations
 {
     [DbContext(typeof(ChocolatierContext))]
-    partial class ChocolatierContextModelSnapshot : ModelSnapshot
+    [Migration("20241028225004_Create_Sale_and_SaleItem")]
+    partial class Create_Sale_and_SaleItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,9 +264,6 @@ namespace Chocolatier.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("uuid");
 
@@ -359,9 +359,6 @@ namespace Chocolatier.Data.Migrations
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
 
                     b.Property<Guid>("SaleId")
                         .HasColumnType("uuid");

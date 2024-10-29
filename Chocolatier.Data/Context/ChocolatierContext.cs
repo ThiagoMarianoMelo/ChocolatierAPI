@@ -16,7 +16,8 @@ namespace Chocolatier.Data.Context
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
         public DbSet<Customer> Customer { get; set; }
-
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<SaleItem> SaleItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +56,16 @@ namespace Chocolatier.Data.Context
 
             modelBuilder.Entity<Customer>().HasKey(c => c.Id);
             modelBuilder.Entity<Customer>().Property(c => c.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Sale>().HasKey(s => s.Id);
+            modelBuilder.Entity<Sale>().Property(s => s.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Sale>().HasOne(s => s.Establishment).WithMany().HasForeignKey(i => i.EstablishmentId);
+            modelBuilder.Entity<Sale>().HasOne(s => s.Customer).WithMany().HasForeignKey(i => i.CustomerId);
+
+            modelBuilder.Entity<SaleItem>().HasKey(si => si.Id);
+            modelBuilder.Entity<SaleItem>().Property(si => si.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<SaleItem>().HasOne(si => si.Product).WithMany().HasForeignKey(oi => oi.ProductId);
+            modelBuilder.Entity<SaleItem>().HasOne(si => si.Sale).WithMany().HasForeignKey(oi => oi.SaleId);
 
             base.OnModelCreating(modelBuilder);
         }
