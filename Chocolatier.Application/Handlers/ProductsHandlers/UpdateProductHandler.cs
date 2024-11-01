@@ -59,6 +59,9 @@ namespace Chocolatier.Application.Handlers.ProductsHandlers
             if (request.Price > 0)
                 product.Price = request.Price;
 
+            if (request.Quantity > 0)
+                product.Quantity = request.Quantity;
+
             if (request.RecipeId != Guid.Empty)
                 product.RecipeId = request.RecipeId;
 
