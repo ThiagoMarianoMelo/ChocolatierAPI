@@ -1,6 +1,7 @@
 using Chocolatier.API.Configurations;
 using Chocolatier.API.Profiles;
 using Microsoft.OpenApi.Models;
+using Hangfire;
 
 internal class Program
 {
@@ -52,6 +53,7 @@ internal class Program
             });
         });
 
+        builder.Services.ConfigureHangFire(builder.Configuration);
 
         var app = builder.Build();
 
@@ -65,6 +67,10 @@ internal class Program
         app.MapControllers();
 
         app.SyncMigrations();
+
+        app.UseHangfireDashboard("/hangfire");
+
+        JobConfiguration.SetHangFireJobs(app.Services.GetRequiredService<IServiceScopeFactory>());
 
         QueuesConfiguration.StartQueuesConsumer(app.Services.GetRequiredService<IServiceScopeFactory>());
 
