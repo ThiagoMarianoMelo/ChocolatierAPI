@@ -33,6 +33,11 @@ namespace Chocolatier.Data.Repositories
                     .OrderByDescending(s => s.SaleDate);
         }
 
+        public async Task<List<Sale>> GetSalesFromEstablishmentFromDay(string EstablishmentId, DateTime dayFilter, CancellationToken cancellationToken)
+        {
+            return await DbSet.AsNoTracking().Where(s => s.EstablishmentId == EstablishmentId && s.SaleDate > dayFilter && s.SaleDate < dayFilter.AddDays(1)).ToListAsync(cancellationToken);
+        }
+
         private Expression<Func<Sale, bool>> BuildQuerySaleFilter(PaymentMethod? paymentMethod, Guid saleId, DateTime initialDateCreatedAt, DateTime finalDateCreatedAt)
         {
             var utcMinValue = DateTime.MinValue.ToUniversalTime();

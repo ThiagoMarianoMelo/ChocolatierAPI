@@ -6,5 +6,6 @@ namespace Chocolatier.Domain.Interfaces.Repositories
     {
         IQueryable<Establishment> GetQueryableEstablishmentsByFilter(string name, string email);
         Task<List<string?>> GetFactoryEmails(CancellationToken cancellationToken);
+        Task<List<Establishment>> GetStores(CancellationToken cancellationToken);
     }
 }

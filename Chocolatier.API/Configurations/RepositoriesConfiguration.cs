@@ -19,6 +19,7 @@ namespace Chocolatier.API.Configurations
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ISaleRepository, SaleRepository>();
             services.AddScoped<ISaleItemRepository, SaleItemRepository>();
+            services.AddScoped<ICashCloseRepository, CashCloseRepository>();
         }
     }
 }
