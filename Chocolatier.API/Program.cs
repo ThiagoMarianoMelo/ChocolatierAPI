@@ -72,7 +72,7 @@ internal class Program
 
         app.UseHangfireDashboard("/hangfire", new DashboardOptions
         {
-            Authorization = new[] { new HangFireScreenAuthorization() }
+            Authorization = [new HangFireScreenAuthorization()]
         });
 
         JobConfiguration.SetHangFireJobs(app.Services.GetRequiredService<IServiceScopeFactory>());
