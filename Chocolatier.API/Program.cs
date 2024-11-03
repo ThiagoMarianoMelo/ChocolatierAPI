@@ -2,6 +2,8 @@ using Chocolatier.API.Configurations;
 using Chocolatier.API.Profiles;
 using Microsoft.OpenApi.Models;
 using Hangfire;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Chocolatier.API.Authorization;
 
 internal class Program
 {
@@ -68,7 +70,10 @@ internal class Program
 
         app.SyncMigrations();
 
-        app.UseHangfireDashboard("/hangfire");
+        app.UseHangfireDashboard("/hangfire", new DashboardOptions
+        {
+            Authorization = new[] { new HangFireScreenAuthorization() }
+        });
 
         JobConfiguration.SetHangFireJobs(app.Services.GetRequiredService<IServiceScopeFactory>());
 
