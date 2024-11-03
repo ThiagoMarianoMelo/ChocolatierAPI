@@ -30,8 +30,7 @@ namespace Chocolatier.API.Configurations
 
             var clashClosingInstace = (CashClosingJob)serviceProvider.GetRequiredService(typeof(CashClosingJob));
 
-            //RecurringJob.AddOrUpdate("CashCloseJob", () => clashClosingInstace.ExecuteClashClose(), "0 02 * * *");
-            RecurringJob.AddOrUpdate("CashCloseJob", () => clashClosingInstace.ExecuteClashClose(), "*/5 * * * *");
+            RecurringJob.AddOrUpdate("CashCloseJob", () => clashClosingInstace.ExecuteClashClose(), "0 02 * * *");
         }
     }
 }
