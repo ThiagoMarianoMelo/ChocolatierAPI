@@ -27,7 +27,7 @@ namespace Chocolatier.Application.Handlers.JobHandlers
 
             foreach (var store in stores)
             {
-                var salesFromStore = await SaleRepository.GetSalesFromEstablishmentFromDay(store.Id, DateTime.UtcNow.Date, cancellationToken);
+                var salesFromStore = await SaleRepository.GetSalesFromEstablishmentFromDay(store.Id, DateTime.Now.Date, cancellationToken);
 
                 var cashCloseEntity = new CashClose()
                 {
