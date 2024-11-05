@@ -25,15 +25,17 @@ namespace Chocolatier.Application.Handlers.JobHandlers
 
             var stores = await EstablishmentRepository.GetStores(cancellationToken);
 
+            var currentDate = DateTime.Now.Date.ToUniversalTime();
+
             foreach (var store in stores)
             {
-                var salesFromStore = await SaleRepository.GetSalesFromEstablishmentFromDay(store.Id, DateTime.Now.Date, cancellationToken);
+                var salesFromStore = await SaleRepository.GetSalesFromEstablishmentFromDay(store.Id, currentDate, cancellationToken);
 
                 var cashCloseEntity = new CashClose()
                 {
                     SaleQuantity = salesFromStore.Count,
                     Billing = salesFromStore.Sum(s => s.TotalPrice),
-                    Date = DateTime.UtcNow.Date,
+                    Date = currentDate,
                     EstablishmentId = store.Id
                 };
 
