@@ -29,6 +29,8 @@ namespace Chocolatier.Application.Handlers.CustomerHandlers
                 
                 var entity = Mapper.Map<Customer>(request);
 
+                entity.CreatedAt = DateTime.UtcNow;
+
                 var resultEntity = await CustomerRepository.Create(entity, cancellationToken);
 
                 if (resultEntity is null)

@@ -14,7 +14,7 @@ namespace Chocolatier.Application.Queries
             Mapper = mapper;
         }
 
-        protected async Task<Pagination<Response>> BaseGetPaginantionDataByQueryable(IQueryable<Entity> queryableData, BaseRequestFilter baseRequestFilter, CancellationToken cancellationToken)
+        protected async Task<Pagination<Response>> BaseGetPaginantionDataByQueryable(IQueryable<Entity> queryableData, BasePaginationRequestFilter baseRequestFilter, CancellationToken cancellationToken)
         {
             var total = queryableData.Count();
 

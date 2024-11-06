@@ -1,6 +1,6 @@
 ﻿namespace Chocolatier.Domain.RequestFilter
 {
-    public class GetProductsPaginationRequest : BaseRequestFilter
+    public class GetProductsPaginationRequest : BasePaginationRequestFilter
     {
         public DateTime InitialExpirationDate { get; set; }
         public DateTime FinalExpirationDate { get; set; }

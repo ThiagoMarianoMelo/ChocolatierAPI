@@ -2,7 +2,7 @@
 
 namespace Chocolatier.Domain.RequestFilter
 {
-    public class GetOrdersPaginationRequest : BaseRequestFilter
+    public class GetOrdersPaginationRequest : BasePaginationRequestFilter
     {
         public DateTime InitialDeadLineDate { get; set; }
         public DateTime FinalDeadLineDate { get; set; }

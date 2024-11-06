@@ -2,7 +2,7 @@
 
 namespace Chocolatier.Domain.RequestFilter
 {
-    public class BaseRequestFilter
+    public class BasePaginationRequestFilter
     {
         [DefaultValue(1)]
         public int CurrentPage { get; set; }

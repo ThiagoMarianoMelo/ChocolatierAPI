@@ -1,6 +1,6 @@
 ﻿namespace Chocolatier.Domain.RequestFilter
 {
-    public class GetEstablishmentsPaginationsRequest : BaseRequestFilter
+    public class GetEstablishmentsPaginationsRequest : BasePaginationRequestFilter
     {
         public string Name { get; set; } = string.Empty;
 

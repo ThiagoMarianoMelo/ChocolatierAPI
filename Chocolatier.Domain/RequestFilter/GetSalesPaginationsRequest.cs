@@ -2,7 +2,7 @@
 
 namespace Chocolatier.Domain.RequestFilter
 {
-    public class GetSalesPaginationsRequest : BaseRequestFilter
+    public class GetSalesPaginationsRequest : BasePaginationRequestFilter
     {
         public PaymentMethod? PaymentMethod { get; set; }
         public Guid SaleId { get; set; }
