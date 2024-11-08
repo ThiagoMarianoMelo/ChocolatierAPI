@@ -53,6 +53,16 @@ namespace Chocolatier.Data.Repositories
         public double GetProductPriceByRecipeId(Guid recipeid)
             => DbSet.AsNoTracking().FirstOrDefault(p => p.RecipeId == recipeid && p.ExpireAt > DateTime.UtcNow && p.CurrentEstablishmentId == AuthEstablishment.Id)?.Price ?? 0;
 
+
+        public async Task<List<Product>> GetExpiringProductsBasedOnDateFilter(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+        {
+            return await DbSet.Where(p => p.CurrentEstablishmentId == AuthEstablishment.Id && p.ExpireAt.Date >= startDate.Date && p.ExpireAt.Date <= endDate.Date)
+                                        .AsNoTracking()
+                                        .Select(c => new Product { Id = c.Id, ExpireAt = c.ExpireAt })
+                                        .ToListAsync(cancellationToken);
+
+        }
+
         private Expression<Func<Product, bool>> BuildQueryProductsTypeFilter(DateTime initialDate, DateTime finalDate, string productName)
         {
             var utcMinValue = DateTime.MinValue.ToUniversalTime();
