@@ -49,7 +49,8 @@ namespace Chocolatier.Application.Queries
 
             if (requestFilter.ReportType == CashClosReportType.ByMoney)
             {
-                var reportData = data.GroupBy(c => c.Date.Date)
+                var reportData = data.OrderBy(c => c.Date.Date)
+                    .GroupBy(c => c.Date.Date)
                     .Select(group => new DataPerDay<double>
                     {
                         Date = group.Key,
@@ -60,7 +61,8 @@ namespace Chocolatier.Application.Queries
             }
             else
             {
-                var reportData = data.GroupBy(c => c.Date.Date)
+                var reportData = data.OrderBy(c => c.Date.Date)
+                    .GroupBy(c => c.Date.Date)
                     .Select(group => new DataPerDay<int>
                     {
                         Date = group.Key,
@@ -72,14 +74,16 @@ namespace Chocolatier.Application.Queries
         }
 
 
-        private Response PrepareReportReponseDataPerDayBasedOnCount<TData>(List<TData> data, Func<TData, DateTime> orderByFunc)
+        private Response PrepareReportReponseDataPerDayBasedOnCount<TData>(List<TData> data, Func<TData, DateTime> orderByGroupByFunc)
         {
-            var reportData = data.GroupBy(orderByFunc)
+            var reportData = data.OrderBy(orderByGroupByFunc)
+                  .GroupBy(orderByGroupByFunc)
                   .Select(group => new DataPerDay<int>
                   {
                       Date = group.Key,
                       Amount = group.Count()
-                  }).ToList();
+                  })
+                  .ToList();
 
             return new Response(true, new BaseReportResponse<int> { ReportData = reportData }, HttpStatusCode.OK);
         }
