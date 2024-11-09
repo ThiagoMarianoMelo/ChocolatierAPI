@@ -25,7 +25,7 @@ namespace Chocolatier.Application.Handlers.JobHandlers
 
             var stores = await EstablishmentRepository.GetStores(cancellationToken);
 
-            var currentDate = DateTime.UtcNow.Date;
+            var currentDate = DateTime.Now.Date;
 
             foreach (var store in stores)
             {
@@ -44,7 +44,7 @@ namespace Chocolatier.Application.Handlers.JobHandlers
                 await CashCloseRepository.SaveChanges(cancellationToken);
             }
 
-            return new Response(true, $"Rotina de fechamento de caixa executada {DateTime.UtcNow}", HttpStatusCode.OK);
+            return new Response(true, $"Rotina de fechamento de caixa executada {DateTime.Now}", HttpStatusCode.OK);
         }
     }
 }

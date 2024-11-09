@@ -39,5 +39,13 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await ReportQueries.GetOrdersPerDayReport(request, cancellationToken));
         }
+
+        [HttpGet]
+        [StoreAuthorization]
+        [Route("CashClose")]
+        public async Task<IActionResult> GetCashClosReport([FromQuery] GetCashClosePerDayReportRequestFilter request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await ReportQueries.GetCashCloseReport(request, cancellationToken));
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace Chocolatier.Domain.Responses.DataResponses
 {
-    public class BaseReportResponse
+    public class BaseReportResponse<T>
     {
-        public List<DataPerDay> ReportData { get; set; } = [];
+        public List<DataPerDay<T>> ReportData { get; set; } = [];
     }
 
-    public class DataPerDay
+    public class DataPerDay<T>
     {
         public DateTime Date { get; set; }
-        public int Amount { get; set; }
+        public T? Amount { get; set; }
     }
 }
