@@ -31,5 +31,13 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await ReportQueries.GetExpiringProductsPerDayReport(request, cancellationToken));
         }
+
+        [HttpGet]
+        [FactoryAuthorization]
+        [Route("Orders")]
+        public async Task<IActionResult> GetOrdersReport([FromQuery] GetOrderPerDayReportRequestFilter request, CancellationToken cancellationToken)
+        {
+            return GetActionResult(await ReportQueries.GetOrdersPerDayReport(request, cancellationToken));
+        }
     }
 }

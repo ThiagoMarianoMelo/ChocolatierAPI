@@ -7,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces.Queries
     {
         Task<Response> GetCustomerPerDayReport(BaseReportRequestFilter requestFilter, CancellationToken cancellationToken);
         Task<Response> GetExpiringProductsPerDayReport(BaseReportRequestFilter requestFilter, CancellationToken cancellationToken);
+        Task<Response> GetOrdersPerDayReport(GetOrderPerDayReportRequestFilter requestFilter, CancellationToken cancellationToken);
     }
 }

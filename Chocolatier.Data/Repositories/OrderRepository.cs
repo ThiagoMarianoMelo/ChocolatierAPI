@@ -17,10 +17,10 @@ namespace Chocolatier.Data.Repositories
             AuthEstablishment = authEstablishment;
         }
 
-        public IQueryable<Order> GetQueryableOrdersFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine, 
+        public IQueryable<Order> GetQueryableOrdersFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine,
             DateTime initialDateCreatedAt, DateTime finalDateCreatedAt)
         {
-            var queryCondiction = BuildQueryIngredientTypeFilter(orderStatus, initialDateDeadLine.ToUniversalTime(), finalDateDeadLine.ToUniversalTime(), 
+            var queryCondiction = BuildQueryIngredientTypeFilter(orderStatus, initialDateDeadLine.ToUniversalTime(), finalDateDeadLine.ToUniversalTime(),
                 initialDateCreatedAt.ToUniversalTime(), finalDateCreatedAt.ToUniversalTime());
 
             return DbSet.AsNoTracking()
@@ -38,12 +38,21 @@ namespace Chocolatier.Data.Repositories
 
         public async Task<string?> GetEstablishmentRequestFromOrder(Guid orderId, CancellationToken cancellationToken)
         {
-             return await DbSet.AsNoTracking()
-                        .Where(or => or.Id == orderId)
-                        .Select(or => or.RequestedById)
-                        .FirstOrDefaultAsync(cancellationToken);
+            return await DbSet.AsNoTracking()
+                       .Where(or => or.Id == orderId)
+                       .Select(or => or.RequestedById)
+                       .FirstOrDefaultAsync(cancellationToken);
         }
-        private Expression<Func<Order, bool>> BuildQueryIngredientTypeFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine, 
+
+        public async Task<List<Order>> GetOrdersByDeadLineAndStatus(DateTime startDate, DateTime endDate, OrderStatus? orderStatus, CancellationToken cancellationToken)
+        {
+            return await DbSet.Where(o => (orderStatus == null || o.CurrentStatus == orderStatus) && o.CreatedAt.Date >= startDate.Date && o.CreatedAt.Date <= endDate.Date)
+                                        .AsNoTracking()
+                                        .Select(o => new Order { Id = o.Id, CreatedAt = o.CreatedAt })
+                                        .ToListAsync(cancellationToken);
+
+        }
+        private Expression<Func<Order, bool>> BuildQueryIngredientTypeFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine,
             DateTime initialDateCreatedAt, DateTime finalDateCreatedAt)
         {
             var utcMinValue = DateTime.MinValue.ToUniversalTime();
