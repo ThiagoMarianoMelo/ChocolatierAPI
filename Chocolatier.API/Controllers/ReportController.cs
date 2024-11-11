@@ -33,7 +33,7 @@ namespace Chocolatier.API.Controllers
         }
 
         [HttpGet]
-        [FactoryAuthorization]
+        [FactoryOrStoreAuthorization]
         [Route("Orders")]
         public async Task<IActionResult> GetOrdersReport([FromQuery] GetOrderPerDayReportRequestFilter request, CancellationToken cancellationToken)
         {

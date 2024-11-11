@@ -46,7 +46,7 @@ namespace Chocolatier.Data.Repositories
 
         public async Task<List<Order>> GetOrdersByDeadLineAndStatus(DateTime startDate, DateTime endDate, OrderStatus? orderStatus, CancellationToken cancellationToken)
         {
-            return await DbSet.Where(o => (orderStatus == null || o.CurrentStatus == orderStatus) && o.CreatedAt.Date >= startDate.Date && o.CreatedAt.Date <= endDate.Date)
+            return await DbSet.Where(GetOrderReportQuery(startDate, endDate, orderStatus))
                                         .AsNoTracking()
                                         .Select(o => new Order { Id = o.Id, CreatedAt = o.CreatedAt })
                                         .ToListAsync(cancellationToken);
@@ -63,6 +63,13 @@ namespace Chocolatier.Data.Repositories
                         && (finalDateDeadLine == utcMinValue || or.DeadLine <= finalDateDeadLine)
                         && (initialDateCreatedAt == utcMinValue || or.CreatedAt >= initialDateCreatedAt)
                         && (finalDateCreatedAt == utcMinValue || or.CreatedAt <= finalDateCreatedAt);
+        }
+
+        private Expression<Func<Order, bool>> GetOrderReportQuery(DateTime startDate, DateTime endDate, OrderStatus? orderStatus)
+        {
+            return o => (AuthEstablishment.EstablishmentType == EstablishmentType.Factory ||  AuthEstablishment.Id == o.RequestedById)
+            && (orderStatus == null || o.CurrentStatus == orderStatus) 
+            && o.CreatedAt.Date >= startDate.Date && o.CreatedAt.Date <= endDate.Date;
         }
     }
 }
