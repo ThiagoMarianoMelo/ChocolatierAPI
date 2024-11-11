@@ -25,7 +25,7 @@ namespace Chocolatier.Application.Handlers.JobHandlers
 
             var stores = await EstablishmentRepository.GetStores(cancellationToken);
 
-            var currentDate = DateTime.Now.Date;
+            var currentDate = DateTime.UtcNow.Date;
 
             foreach (var store in stores)
             {
