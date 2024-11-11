@@ -2,10 +2,10 @@
 {
     public class GetCashClosePerDayReportRequestFilter : BaseReportRequestFilter
     {
-        public CashClosReportType ReportType { get; set; } = CashClosReportType.ByMoney;
+        public CashCloseReportType ReportType { get; set; } = CashCloseReportType.ByMoney;
     }
 
-    public enum CashClosReportType
+    public enum CashCloseReportType
     {
         ByMoney = 0,
         ByAmount = 1

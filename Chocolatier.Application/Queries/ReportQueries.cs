@@ -47,7 +47,7 @@ namespace Chocolatier.Application.Queries
         {
             var data = await CashCloseRepository.GetCashCloseByDataFilter(requestFilter.StartDate, requestFilter.EndDate, cancellationToken);
 
-            if (requestFilter.ReportType == CashClosReportType.ByMoney)
+            if (requestFilter.ReportType == CashCloseReportType.ByMoney)
             {
                 var reportData = data.OrderBy(c => c.Date.Date)
                     .GroupBy(c => c.Date.Date)
