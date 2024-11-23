@@ -10,6 +10,6 @@ namespace Chocolatier.Domain.Interfaces.Repositories
         Task<List<Product>> GetProductsOnStorageByRecipeId(Guid recipeId, CancellationToken cancellationToken);
         int GetProductQuantityInStorageByRecipeId(Guid recipeId);
         Task<List<Product>> GetExpiringProductsBasedOnDateFilter(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
-        Task<List<Product>> GetExpiredProducts(int totalOfRegister, CancellationToken cancellationToken);
+        Task<int> GetExpiredProductsCount(CancellationToken cancellationToken);
     }
 }

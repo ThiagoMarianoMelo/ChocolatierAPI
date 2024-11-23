@@ -63,14 +63,11 @@ namespace Chocolatier.Data.Repositories
 
         }
 
-        public async Task<List<Product>> GetExpiredProducts(int totalOfRegister, CancellationToken cancellationToken)
+        public async Task<int> GetExpiredProductsCount(CancellationToken cancellationToken)
         {
             return await DbSet.Where(p => p.CurrentEstablishmentId == AuthEstablishment.Id && p.ExpireAt < DateTime.UtcNow)
                                         .AsNoTracking()
-                                        .Select(c => new Product { Id = c.Id, Name = c.Name, Price = c.Price, Quantity = c.Quantity, RecipeId = c.RecipeId, ExpireAt = c.ExpireAt })
-                                        .OrderBy(p => p.ExpireAt)
-                                        .Take(totalOfRegister)
-                                        .ToListAsync(cancellationToken);
+                                        .CountAsync(cancellationToken);
 
         }
 

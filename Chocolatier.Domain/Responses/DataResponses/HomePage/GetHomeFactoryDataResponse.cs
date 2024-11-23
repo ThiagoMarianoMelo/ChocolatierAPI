@@ -2,9 +2,9 @@
 {
     public class GetHomeFactoryDataResponse
     {
-        public List<ProductListDataResponse> ProductsExpired { get; set; } = new List<ProductListDataResponse>();
-        public List<IngredientListDataResponse> IngredientsExpired { get; set; } = new List<IngredientListDataResponse>();
-        public List<OrdersListDataResponse> OrdersPending { get; set; } = new List<OrdersListDataResponse>();
-        public List<DataPerDay<int>>? OrdersDoneReportData { get; set; }
+        public int ProductsExpired { get; set; } = 0;
+        public int IngredientsExpired { get; set; } = 0;
+        public int OrdersPending { get; set; } = 0;
+        public int OrdersDone { get; set; } = 0;
     }
 }

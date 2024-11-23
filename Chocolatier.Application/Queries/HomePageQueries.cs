@@ -26,31 +26,21 @@ namespace Chocolatier.Application.Queries
 
         public async Task<Response> GetHomeFactoryData(CancellationToken cancellationToken)
         {
-            var productsExpired = await ProductRepository.GetExpiredProducts(10, cancellationToken);
-            var ingredientsExpired = await IngredientRepository.GetExpiredIngredients(10, cancellationToken);
-            var ordersNotConfirmed = await OrderRepository.GetOrderByStatusAndRegisterRange(10, OrderStatus.Pending, cancellationToken);
-            var orderDoneReportData = await OrderRepository.GetOrdersByDeadLineAndStatus(DateTime.UtcNow.AddDays(-7), DateTime.UtcNow, OrderStatus.Done, cancellationToken);
+            var productsExpired = await ProductRepository.GetExpiredProductsCount(cancellationToken);
+            var ingredientsExpired = await IngredientRepository.GetExpiredIngredientsCount(cancellationToken);
+            var ordersNotConfirmed = await OrderRepository.GetOrderByStatusCount(OrderStatus.Pending, cancellationToken);
+            var ordersDone = await OrderRepository.GetOrderByStatusCount(OrderStatus.Done, cancellationToken);
 
-            var ordeDoneReportData = orderDoneReportData
-                                    .OrderBy(c => c.CreatedAt.Date)
-                                    .GroupBy(c => c.CreatedAt.Date)
-                                      .Select(group => new DataPerDay<int>
-                                      {
-                                          Date = group.Key,
-                                          Amount = group.Count()
-                                      })
-                                      .ToList();
 
             var responseData = new GetHomeFactoryDataResponse
             {
-                ProductsExpired = Mapper.Map<List<ProductListDataResponse>>(productsExpired),
-                IngredientsExpired = Mapper.Map<List<IngredientListDataResponse>>(ingredientsExpired),
-                OrdersPending = Mapper.Map<List<OrdersListDataResponse>>(ordersNotConfirmed),
-                OrdersDoneReportData = ordeDoneReportData
+                ProductsExpired = productsExpired,
+                IngredientsExpired = ingredientsExpired,
+                OrdersPending = ordersNotConfirmed,
+                OrdersDone = ordersDone
             };
 
             return new Response(true, responseData, HttpStatusCode.OK);
         }
-
     }
 }

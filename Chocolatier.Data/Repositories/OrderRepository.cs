@@ -52,13 +52,11 @@ namespace Chocolatier.Data.Repositories
                                         .ToListAsync(cancellationToken);
 
         }
-        public async Task<List<Order>> GetOrderByStatusAndRegisterRange(int totalOfRegisters, OrderStatus orderStatus, CancellationToken cancellationToken)
+        public async Task<int> GetOrderByStatusCount(OrderStatus orderStatus, CancellationToken cancellationToken)
         {
             return await DbSet.Where(o => o.CurrentStatus == orderStatus)
                             .AsNoTracking()
-                            .Select(o => new Order { Id = o.Id, CreatedAt = o.CreatedAt, CurrentStatus = o.CurrentStatus, DeadLine = o.DeadLine })
-                            .Take(totalOfRegisters)
-                            .ToListAsync(cancellationToken);
+                            .CountAsync(cancellationToken);
 
         }
         private Expression<Func<Order, bool>> BuildQueryIngredientTypeFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine,
