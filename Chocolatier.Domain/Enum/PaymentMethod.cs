@@ -5,7 +5,7 @@ namespace Chocolatier.Domain.Enum
     public enum PaymentMethod
     {
         [StringValue("Cartão de Credito")]
-        CrediCard = 0,
+        CreditCard = 0,
         [StringValue("Dinheiro")]
         Cash = 1,
         [StringValue("Cartão de Debito")]

@@ -7,5 +7,6 @@ namespace Chocolatier.Domain.Interfaces.Repositories
         IQueryable<Ingredient> GetQueryableIngredientByFilter(DateTime initialDate, DateTime finalDate, Guid ingredientTypeId);
         Task<int> GetDisponibleAmountIngredientsByIngredientType(Guid ingredientTypeId, CancellationToken cancellationToken);
         Task<List<Ingredient>> GetDisponibleIngredientsByIngredientType(Guid ingredientTypeId, CancellationToken cancellationToken);
+        Task<List<Ingredient>> GetExpiredIngredients(int totalOfRegister, CancellationToken cancellationToken);
     }
 }

@@ -63,6 +63,17 @@ namespace Chocolatier.Data.Repositories
 
         }
 
+        public async Task<List<Product>> GetExpiredProducts(int totalOfRegister, CancellationToken cancellationToken)
+        {
+            return await DbSet.Where(p => p.CurrentEstablishmentId == AuthEstablishment.Id && p.ExpireAt < DateTime.UtcNow)
+                                        .AsNoTracking()
+                                        .Select(c => new Product { Id = c.Id, Name = c.Name, Price = c.Price, Quantity = c.Quantity, RecipeId = c.RecipeId, ExpireAt = c.ExpireAt })
+                                        .OrderBy(p => p.ExpireAt)
+                                        .Take(totalOfRegister)
+                                        .ToListAsync(cancellationToken);
+
+        }
+
         private Expression<Func<Product, bool>> BuildQueryProductsTypeFilter(DateTime initialDate, DateTime finalDate, string productName)
         {
             var utcMinValue = DateTime.MinValue.ToUniversalTime();

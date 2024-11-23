@@ -52,6 +52,15 @@ namespace Chocolatier.Data.Repositories
                                         .ToListAsync(cancellationToken);
 
         }
+        public async Task<List<Order>> GetOrderByStatusAndRegisterRange(int totalOfRegisters, OrderStatus orderStatus, CancellationToken cancellationToken)
+        {
+            return await DbSet.Where(o => o.CurrentStatus == orderStatus)
+                            .AsNoTracking()
+                            .Select(o => new Order { Id = o.Id, CreatedAt = o.CreatedAt, CurrentStatus = o.CurrentStatus, DeadLine = o.DeadLine })
+                            .Take(totalOfRegisters)
+                            .ToListAsync(cancellationToken);
+
+        }
         private Expression<Func<Order, bool>> BuildQueryIngredientTypeFilter(OrderStatus? orderStatus, DateTime initialDateDeadLine, DateTime finalDateDeadLine,
             DateTime initialDateCreatedAt, DateTime finalDateCreatedAt)
         {
@@ -67,8 +76,8 @@ namespace Chocolatier.Data.Repositories
 
         private Expression<Func<Order, bool>> GetOrderReportQuery(DateTime startDate, DateTime endDate, OrderStatus? orderStatus)
         {
-            return o => (AuthEstablishment.EstablishmentType == EstablishmentType.Factory ||  AuthEstablishment.Id == o.RequestedById)
-            && (orderStatus == null || o.CurrentStatus == orderStatus) 
+            return o => (AuthEstablishment.EstablishmentType == EstablishmentType.Factory || AuthEstablishment.Id == o.RequestedById)
+            && (orderStatus == null || o.CurrentStatus == orderStatus)
             && o.CreatedAt.Date >= startDate.Date && o.CreatedAt.Date <= endDate.Date;
         }
     }
