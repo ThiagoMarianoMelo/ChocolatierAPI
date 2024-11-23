@@ -6,5 +6,6 @@ namespace Chocolatier.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<Customer>> GetCustomers(CancellationToken cancellationToken);
         Task<List<Customer>> GetNewCustomerByIntervalBasedOnDay(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
+        Task<int> GetCountOfNewCustomerThisWeek(CancellationToken cancellationToken);
     }
 }

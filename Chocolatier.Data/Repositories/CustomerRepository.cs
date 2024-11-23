@@ -28,6 +28,14 @@ namespace Chocolatier.Data.Repositories
                     .ToListAsync(cancellationToken);
         }
 
+        public async Task<int> GetCountOfNewCustomerThisWeek(CancellationToken cancellationToken)
+        {
+
+            return await DbSet.AsNoTracking()
+                    .Where(c => c.CreatedAt >= DateTime.UtcNow.AddDays(-7))
+                    .CountAsync(cancellationToken);
+        }
+
         public async Task<List<Customer>> GetNewCustomerByIntervalBasedOnDay(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
         {
             return await DbSet.Where(c => c.CreatedAt.Date >= startDate.Date && c.CreatedAt.Date <= endDate.Date)

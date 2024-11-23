@@ -7,5 +7,7 @@ namespace Chocolatier.Domain.Interfaces.Repositories
     {
         IQueryable<Sale> GetQueryableSalesByFilter(PaymentMethod? paymentMethod, Guid customerId, DateTime initialDateCreatedAt, DateTime finalDateCreatedAt);
         Task<List<Sale>> GetSalesFromEstablishmentFromDay(string EstablishmentId, DateTime dayFilter, CancellationToken cancellationToken);
+        Task<int> GetTotalSalesFromToday(CancellationToken cancellationToken);
+        Task<double> GetTotalBillingFromToday(CancellationToken cancellationToken);
     }
 }

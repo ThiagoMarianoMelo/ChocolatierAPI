@@ -22,5 +22,13 @@ namespace Chocolatier.API.Controllers
         {
             return GetActionResult(await HomePageQueries.GetHomeFactoryData(cancellationToken));
         }
+
+        [HttpGet]
+        [StoreAuthorization]
+        [Route("Store")]
+        public async Task<IActionResult> GetStoreHomeData(CancellationToken cancellationToken)
+        {
+            return GetActionResult(await HomePageQueries.GetHomeStoreData(cancellationToken));
+        }
     }
 }

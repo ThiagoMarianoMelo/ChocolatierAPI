@@ -91,7 +91,7 @@ namespace Chocolatier.Application.Handlers.SaleHandlers
                 var productQuantityInStorage = ProductRepository.GetProductQuantityInStorageByRecipeId(item.RecipeId);
 
                 if (productQuantityInStorage < item.Quantity)
-                    return new Response(false, [$"Não há produtos suficientes em estoque."], HttpStatusCode.BadRequest);
+                    return new Response(false, [$"Não há produtos dentro da validade suficientes em estoque."], HttpStatusCode.BadRequest);
             }
 
             if (saleItens.Select(Si => Si.RecipeId).Count() != saleItens.Select(Si => Si.RecipeId).Distinct().Count())

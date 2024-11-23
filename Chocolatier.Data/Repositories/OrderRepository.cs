@@ -54,7 +54,7 @@ namespace Chocolatier.Data.Repositories
         }
         public async Task<int> GetOrderByStatusCount(OrderStatus orderStatus, CancellationToken cancellationToken)
         {
-            return await DbSet.Where(o => o.CurrentStatus == orderStatus)
+            return await DbSet.Where(o => (AuthEstablishment.EstablishmentType == EstablishmentType.Factory || AuthEstablishment.Id == o.RequestedById) && o.CurrentStatus == orderStatus)
                             .AsNoTracking()
                             .CountAsync(cancellationToken);
 

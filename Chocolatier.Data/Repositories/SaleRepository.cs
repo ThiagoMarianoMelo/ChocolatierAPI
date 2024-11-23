@@ -38,6 +38,15 @@ namespace Chocolatier.Data.Repositories
             return await DbSet.AsNoTracking().Where(s => s.EstablishmentId == EstablishmentId && s.SaleDate > dayFilter && s.SaleDate < dayFilter.AddDays(1)).ToListAsync(cancellationToken);
         }
 
+        public async Task<int> GetTotalSalesFromToday(CancellationToken cancellationToken)
+        {
+            return await DbSet.AsNoTracking().Where(s => s.EstablishmentId == AuthEstablishment.Id && s.SaleDate.Date == DateTime.UtcNow.Date).CountAsync(cancellationToken);
+        }
+        public async Task<double> GetTotalBillingFromToday(CancellationToken cancellationToken)
+        {
+            return await DbSet.AsNoTracking().Where(s => s.EstablishmentId == AuthEstablishment.Id && s.SaleDate.Date == DateTime.UtcNow.Date).SumAsync(s => s.TotalPrice, cancellationToken);
+        }
+
         private Expression<Func<Sale, bool>> BuildQuerySaleFilter(PaymentMethod? paymentMethod, Guid saleId, DateTime initialDateCreatedAt, DateTime finalDateCreatedAt)
         {
             var utcMinValue = DateTime.MinValue.ToUniversalTime();
