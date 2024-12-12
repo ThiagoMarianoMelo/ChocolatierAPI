@@ -32,7 +32,7 @@ namespace Chocolatier.Data.Repositories
                         CreatedAt = or.CreatedAt,
                         DeadLine = or.DeadLine
                     })
-                    .OrderBy(or => or.DeadLine);
+                    .OrderBy(or => or.CreatedAt);
         }
 
 
