@@ -12,8 +12,8 @@ namespace Chocolatier.API.Configurations
         public static void ConfigureQueues(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<EmailQueueConfiguration>(configuration.GetSection(nameof(EmailQueueConfiguration)));
-            services.AddScoped<IEmailQueueSender, EmailQueueSender>();
-            services.AddScoped<EmailQueueConsumer>();
+            services.AddSingleton<IEmailQueueSender, EmailQueueSender>();
+            services.AddSingleton<EmailQueueConsumer>();
         }
 
         public static void StartQueuesConsumer(IServiceScopeFactory scopeFactory)
