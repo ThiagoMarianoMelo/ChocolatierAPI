@@ -29,6 +29,8 @@ namespace Chocolatier.Application.Senders
                                  routingKey: QueueConfiguration.Queue,
                                  basicProperties: null,
                                  body: body);
+
+            Connection.Close();
         }
     }
 }
