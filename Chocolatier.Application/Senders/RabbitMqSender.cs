@@ -17,7 +17,7 @@ namespace Chocolatier.Application.Senders
 
             Connection = factory.CreateConnection().CreateModel();
 
-            Connection.QueueDeclare(queue: QueueConfiguration.Queue, durable: false, exclusive: true, autoDelete: true);
+            Connection.QueueDeclare(queue: QueueConfiguration.Queue, durable: true, exclusive: false, autoDelete: false);
         }
 
         protected void SendMessage(Object message)
@@ -30,7 +30,6 @@ namespace Chocolatier.Application.Senders
                                  basicProperties: null,
                                  body: body);
 
-            Connection.Close();
         }
     }
 }
